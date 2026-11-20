@@ -3,6 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<style>
+/* Page transition cover: dark from the first paint until the page has rendered, then one smooth fade. */
+html,body{background:#050909}
+body::after{content:"";position:fixed;inset:0;z-index:9999;background:#050909;pointer-events:none;opacity:0;transition:opacity .5s cubic-bezier(.2,.7,.2,1)}
+html.ymir-cover body::after{opacity:1;transition:none}
+html.ymir-leave body::after{opacity:1;pointer-events:auto;transition:opacity .28s ease-in}
+@media (prefers-reduced-motion: reduce){body::after{transition:none !important}}
+</style>
+<script>document.documentElement.classList.add('ymir-cover');setTimeout(function(){document.documentElement.classList.remove('ymir-cover');},4000);</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -198,8 +208,36 @@ class Component extends DCLogic {
     this.onResize = () => { const w = window.innerWidth >= 1000; if (w !== this.state.wide) this.setState({ wide: w }); };
     this.onResize();
     window.addEventListener('resize', this.onResize);
+    this.navCleanup = this.setupNav();
   }
-  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); if (this.navCleanup) this.navCleanup(); }
+
+  // Page transition: the dark cover (set in <head>) stays until this page has rendered, then fades out.
+  // Clicking a link to the other page fades the cover back in, then navigates. Same-page and new-tab links are untouched.
+  setupNav() {
+    const root = document.documentElement;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (location.hash) {
+      let t = null; try { t = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (e) {}
+      if (t) { const sb = root.style.scrollBehavior; root.style.scrollBehavior = 'auto'; t.scrollIntoView(); root.style.scrollBehavior = sb; }
+    }
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('ymir-cover', 'ymir-leave')));
+    const onClick = e => {
+      const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (a.target && a.target !== '_self') return;
+      let url; try { url = new URL(a.getAttribute('href'), location.href); } catch (err) { return; }
+      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      e.preventDefault();
+      root.classList.add('ymir-leave');
+      setTimeout(() => { location.href = url.href; }, reduce ? 0 : 280);
+    };
+    const onShow = ev => { if (ev.persisted) root.classList.remove('ymir-cover', 'ymir-leave'); };
+    document.addEventListener('click', onClick);
+    window.addEventListener('pageshow', onShow);
+    return () => { document.removeEventListener('click', onClick); window.removeEventListener('pageshow', onShow); };
+  }
+
   renderVals() { return { wide: this.state.wide }; }
 }
 </script>
