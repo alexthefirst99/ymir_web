@@ -105,8 +105,8 @@ button{font-family:inherit}
         <span style="display:flex; align-items:center; gap:7px;"><span style="width:8px; height:8px; border-radius:50%; background:#F0509C; box-shadow:0 0 8px #F0509C;"></span>Tumor, lepidic</span>
         <span style="display:flex; align-items:center; gap:7px;"><span style="width:8px; height:8px; border-radius:50%; background:#FF8A5C; box-shadow:0 0 8px #FF8A5C;"></span>Tumor, invasive</span>
         <span style="display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; border-radius:50%; background:#4FD6F5; box-shadow:0 0 8px #4FD6F5;"></span>T cell</span>
-        <span style="display:flex; align-items:center; gap:7px;"><span style="width:10px; height:10px; border-radius:50%; border:1.4px solid #4FD6F5;"></span>Macrophage, suppressive</span>
-        <span style="display:flex; align-items:center; gap:7px;"><span style="width:10px; height:10px; border-radius:50%; background:#4FD6F5; box-shadow:0 0 8px #4FD6F5;"></span>Macrophage, attack</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:10px; height:10px; border-radius:50%; border:1.4px solid #F2C14E;"></span>Macrophage, suppressive</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:10px; height:10px; border-radius:50%; background:#F2C14E; box-shadow:0 0 8px #F2C14E;"></span>Macrophage, attack</span>
         <span style="display:flex; align-items:center; gap:7px;"><span style="width:12px; height:4px; border-radius:4px; background:#3FD68C; box-shadow:0 0 8px #3FD68C;"></span>Fibroblast</span>
         <span style="display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; border-radius:50%; background:#6E8584;"></span>Lung lining</span>
         <span style="display:flex; align-items:center; gap:7px;"><span style="width:5px; height:5px; border-radius:50%; background:#C8F169; box-shadow:0 0 6px #C8F169;"></span>TGF-β signal</span>
@@ -481,6 +481,7 @@ class Component extends DCLogic {
     if (this.props.autoplay ?? true) this.timers.push(setTimeout(() => this.play(), 1400));
     this.setupFx();
     this.navCleanup = this.setupNav();
+    this.lbCleanup = this.setupLightbox();
     this._live = true;
   }
   // Editor hot-reload guard: if the logic class was swapped without a fresh mount,
@@ -495,6 +496,8 @@ class Component extends DCLogic {
     this.setupScroll();
     if (this.navCleanup) this.navCleanup();
     this.navCleanup = this.setupNav();
+    if (this.lbCleanup) this.lbCleanup();
+    this.lbCleanup = this.setupLightbox();
   }
   componentDidUpdate() {
     if (!this._live) this.resume();
@@ -508,6 +511,95 @@ class Component extends DCLogic {
     this.stop();
     if (this.fxCleanup) this.fxCleanup();
     if (this.navCleanup) this.navCleanup();
+    if (this.lbCleanup) this.lbCleanup();
+  }
+
+  // Showcase: click (or Enter/Space on) a video card to open its HD version in a large popup.
+  // HD files live at the same path with /media/hd/ (falls back to the card's own video if HD can't load).
+  setupLightbox() {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const root = document.documentElement;
+    const hdOf = src => src.replace(/(^|\/)media\/(?!hd\/)/, '$1media/hd/');
+    const cards = () => Array.from(document.querySelectorAll('[data-video]'));
+    const decorate = () => cards().forEach(el => {
+      if (el.hasAttribute('data-lb-ready')) return;
+      el.setAttribute('data-lb-ready', ''); el.setAttribute('role', 'button'); el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-label', 'Enlarge video in HD'); el.style.cursor = 'zoom-in';
+      const chip = document.createElement('span');
+      chip.setAttribute('aria-hidden', 'true');
+      chip.textContent = 'HD · click to enlarge';
+      chip.style.cssText = 'position:absolute;right:14px;top:14px;z-index:3;padding:8px 13px;border-radius:999px;background:rgba(5,12,12,0.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.14);font-size:11px;letter-spacing:0.08em;color:#fff;pointer-events:none;';
+      el.appendChild(chip);
+    });
+    decorate();
+    let box = null, lastFocus = null, prevOverflow = '';
+    const close = () => {
+      if (!box) return;
+      const b = box; box = null;
+      b.style.opacity = '0';
+      const v = b.querySelector('video'); if (v) v.pause();
+      setTimeout(() => b.remove(), reduce ? 0 : 260);
+      root.style.overflow = prevOverflow;
+      cards().forEach(el => { const r = el.getBoundingClientRect(); const v2 = el.querySelector('video'); if (v2 && r.bottom > 0 && r.top < innerHeight && !reduce) { v2.muted = true; const pr = v2.play(); if (pr && pr.catch) pr.catch(() => {}); } });
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+    const open = card => {
+      const sd = card.querySelector('video'); if (!sd || box) return;
+      const fig = card.closest('figure'), spans = fig ? fig.querySelectorAll('figcaption > span') : [];
+      const title = spans[0] ? spans[0].textContent : 'Simulation video', sub = spans[1] ? spans[1].textContent : '';
+      const sdSrc = sd.currentSrc || sd.getAttribute('src') || '';
+      lastFocus = document.activeElement;
+      cards().forEach(el => { const v2 = el.querySelector('video'); if (v2) v2.pause(); });
+      box = document.createElement('div');
+      box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', title + ' (HD)');
+      box.style.cssText = 'position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vw,40px);background:rgba(3,8,8,0.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;transition:opacity .25s ease;';
+      const fr = document.createElement('div');
+      fr.style.cssText = 'position:relative;width:min(1400px,100%);display:flex;flex-direction:column;gap:14px;transform:scale(.97);transition:transform .3s cubic-bezier(.2,.7,.2,1);';
+      const v = document.createElement('video');
+      v.muted = true; v.loop = true; v.playsInline = true; v.controls = true; v.autoplay = true; v.preload = 'auto';
+      if (sd.poster) v.poster = sd.poster;
+      v.setAttribute('aria-label', title + ' (HD)');
+      v.style.cssText = 'display:block;width:100%;max-height:calc(100vh - 150px);object-fit:contain;border-radius:18px;background:#000;border:1px solid rgba(255,255,255,0.12);box-shadow:0 40px 120px rgba(0,0,0,0.7);';
+      let fellBack = false;
+      v.addEventListener('error', () => { if (!fellBack && sdSrc) { fellBack = true; v.src = sdSrc; hdTag.textContent = 'Standard quality'; const pr = v.play(); if (pr && pr.catch) pr.catch(() => {}); } });
+      v.src = hdOf(sdSrc);
+      const bar = document.createElement('div');
+      bar.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:0 6px;';
+      const txt = document.createElement('div');
+      txt.style.cssText = 'display:flex;flex-direction:column;gap:2px;min-width:0;';
+      const t1 = document.createElement('span'); t1.textContent = title; t1.style.cssText = 'font-size:18px;font-weight:300;color:#fff;';
+      const t2 = document.createElement('span'); t2.textContent = sub; t2.style.cssText = 'font-size:13px;color:#8FA0A0;';
+      txt.appendChild(t1); if (sub) txt.appendChild(t2);
+      const hdTag = document.createElement('span'); hdTag.textContent = 'HD';
+      hdTag.style.cssText = 'padding:6px 12px;border-radius:999px;border:1px solid rgba(200,241,105,0.5);color:#C8F169;font-size:12px;letter-spacing:0.12em;';
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.setAttribute('aria-label', 'Close video');
+      btn.style.cssText = 'position:absolute;top:-18px;right:-18px;width:48px;height:48px;border-radius:50%;border:none;background:#fff;color:#050909;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,0.5);';
+      const ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns, 'svg'), path = document.createElementNS(ns, 'path');
+      svg.setAttribute('width', '16'); svg.setAttribute('height', '16'); svg.setAttribute('viewBox', '0 0 16 16'); svg.setAttribute('aria-hidden', 'true');
+      path.setAttribute('d', 'M3 3l10 10M13 3L3 13'); path.setAttribute('stroke', '#050909'); path.setAttribute('stroke-width', '1.8'); path.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(path); btn.appendChild(svg);
+      btn.addEventListener('click', close);
+      bar.appendChild(txt); bar.appendChild(hdTag);
+      fr.appendChild(v); fr.appendChild(bar); fr.appendChild(btn); box.appendChild(fr);
+      box.addEventListener('click', e => { if (e.target === box) close(); });
+      document.body.appendChild(box);
+      prevOverflow = root.style.overflow; root.style.overflow = 'hidden';
+      requestAnimationFrame(() => requestAnimationFrame(() => { if (!box) return; box.style.opacity = '1'; fr.style.transform = 'none'; }));
+      const pr = v.play(); if (pr && pr.catch) pr.catch(() => {});
+      btn.focus();
+    };
+    const onClick = e => { const card = e.target && e.target.closest ? e.target.closest('[data-video]') : null; if (card) open(card); };
+    const onKey = e => {
+      if (box && e.key === 'Escape') { close(); return; }
+      if (box && e.key === 'Tab') { e.preventDefault(); box.querySelector(document.activeElement === box.querySelector('button') ? 'video' : 'button').focus(); return; }
+      const card = e.target && e.target.closest ? e.target.closest('[data-video]') : null;
+      if (!box && card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(card); }
+    };
+    document.addEventListener('click', onClick);
+    document.addEventListener('keydown', onKey);
+    const t = setTimeout(decorate, 1500);
+    return () => { clearTimeout(t); document.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); close(); };
   }
 
   // Page transition: the dark cover (set in <head>) stays until this page has rendered, then fades out.
@@ -708,17 +800,42 @@ class Component extends DCLogic {
     };
     const blob = (x, y) => Math.hypot(x, y) * (1 + 0.16 * Math.sin(3 * Math.atan2(y, x) + 1));
     const rings = [], sp = 0.118;
-    for (let row = -5; row <= 5; row++) for (let col = -7; col <= 7; col++) {
-      const cx = col * sp + (row & 1 ? sp / 2 : 0) + (rnd() - 0.5) * 0.03, cy = row * sp * 0.866 + (rnd() - 0.5) * 0.03;
-      if (Math.abs(cx) > 0.72 || Math.abs(cy) > 0.56) continue;
-      rings.push({ cx, cy, r: 0.04 + 0.012 * rnd(), d: blob(cx, cy) });
+    // Irregular alveoli: jittered centres, size set by the space available (neighbours share one thin septum),
+    // slightly oval and uneven outlines, and occasional larger spaces (alveolar ducts).
+    // Alveolar centres: random (Poisson-disc) placement, no grid. The minimum spacing varies smoothly across the
+    // field so some regions have larger air spaces and others smaller ones, as in real lung.
+    for (let tries = 0; tries < 9000 && rings.length < 320; tries++) {
+      const cx = (rnd() - 0.5) * 1.52, cy = (rnd() - 0.5) * 1.2;
+      const md = sp * (0.72 + 0.6 * (0.5 + 0.5 * Math.sin(cx * 6.3 + 1.7) * Math.cos(cy * 5.1 - 0.6)));
+      if (rings.every(q => Math.hypot(q.cx - cx, q.cy - cy) > Math.max(md, q.md))) rings.push({ cx, cy, md, r: 0, d: blob(cx, cy) });
     }
+    // Each alveolus fills the space up to the midline with its neighbours (soft-cornered Voronoi cell, inset by half a septum),
+    // so neighbours share one thin wall and outlines are irregular rather than a honeycomb.
+    const SEP = 0.006, RMAX = sp * 0.85, KS = 0.02;
+    rings.forEach(g => {
+      const nb = rings.filter(q => q !== g && Math.hypot(q.cx - g.cx, q.cy - g.cy) < sp * 2.2).map(q => ({ D: Math.hypot(q.cx - g.cx, q.cy - g.cy), phi: Math.atan2(q.cy - g.cy, q.cx - g.cx) }));
+      g.rad = a => { let acc = Math.exp(-RMAX / KS); for (const q of nb) { const c = Math.cos(a - q.phi); if (c > 0.05) acc += Math.exp(-((q.D / 2 - SEP) / c) / KS); } return Math.max(0.01, -KS * Math.log(acc)); };
+      let per = 0, prev = null; for (let k = 0; k <= 48; k++) { const a = k / 48 * 6.2832, r = g.rad(a), pt = [Math.cos(a) * r, Math.sin(a) * r]; if (prev) per += Math.hypot(pt[0] - prev[0], pt[1] - prev[1]); prev = pt; }
+      g.per = per; g.r = per / 6.2832;
+    });
     rings.sort((p, q) => p.d - q.d);
     const walls = [];
-    rings.forEach(g => { const n = 12; for (let j = 0; j < n; j++) { const an = j / n * 6.2832 + rnd() * 0.25, x = g.cx + Math.cos(an) * g.r, y = g.cy + Math.sin(an) * g.r; walls.push({ x, y, d: blob(x, y) + rnd() * 0.015 }); } });
+    rings.forEach(g => { const n = Math.max(9, Math.round(g.per / 0.023)); for (let j = 0; j < n; j++) { const an = j / n * 6.2832 + rnd() * 0.2, rr = g.rad(an) * (0.97 - 0.03 * rnd()), x = g.cx + Math.cos(an) * rr, y = g.cy + Math.sin(an) * rr; walls.push({ x, y, d: blob(x, y) + rnd() * 0.015 }); } });
     walls.sort((p, q) => p.d - q.d);
     walls.forEach((w, i) => mk('L', i, w.x, w.y));
     this.walls = walls; this.rings = rings;
+    // Interstitium: the thin shared septum between neighbouring alveoli, where fibroblasts and T cells live (not the air space).
+    const seams = [];
+    for (let i = 0; i < rings.length; i++) for (let j = i + 1; j < rings.length; j++) {
+      const a = rings[i], b = rings[j], dx = b.cx - a.cx, dy = b.cy - a.cy, L = Math.hypot(dx, dy);
+      if (L > sp * 2.2) continue;
+      const hx = (a.cx + b.cx) / 2, hy = (a.cy + b.cy) / 2;
+      if (rings.some(q => q !== a && q !== b && Math.hypot(q.cx - hx, q.cy - hy) < L / 2 - 0.004)) continue;
+      const mx = (a.cx + b.cx) / 2, my = (a.cy + b.cy) / 2, tx = -dy / L, ty = dx / L;
+      for (let k = 0; k < 3; k++) { const t = (rnd() - 0.5) * 0.05, nrm = (rnd() - 0.5) * 0.008, x = mx + tx * t + (dx / L) * nrm, y = my + ty * t + (dy / L) * nrm; seams.push({ x, y, d: blob(x, y), ang: Math.atan2(ty, tx) + (rnd() - 0.5) * 0.9 }); }
+    }
+    seams.sort((p, q) => p.d - q.d);
+    this.seams = seams;
     for (let i = 0; i < 277; i++) mk('T', i);
     for (let i = 0; i < 242; i++) mk('V', i);
     for (let i = 0; i < 120; i++) mk('S', i);
@@ -734,7 +851,7 @@ class Component extends DCLogic {
       g.addColorStop(0, `rgba(255,255,255,${core})`); g.addColorStop(0.12, `rgba(${rgb},1)`); g.addColorStop(0.32, `rgba(${rgb},0.32)`); g.addColorStop(1, `rgba(${rgb},0)`);
       x.fillStyle = g; x.fillRect(0, 0, 64, 64); return c;
     };
-    this.spr = { T: spr('240,80,156', 0.9), V: spr('255,138,92', 0.9), I: spr('79,214,245', 0.9), M: spr('79,214,245', 0.9), F: spr('63,214,140', 0.7), L: spr('110,133,132', 0.25), S: spr('200,241,105', 0.8) };
+    this.spr = { T: spr('240,80,156', 0.9), V: spr('255,138,92', 0.9), I: spr('79,214,245', 0.9), M: spr('242,193,78', 0.9), F: spr('63,214,140', 0.7), L: spr('110,133,132', 0.25), S: spr('200,241,105', 0.8) };
   }
 
   applyState(key, snap) {
@@ -749,37 +866,39 @@ class Component extends DCLogic {
     const R = wd(C.hide) + 0.03;
     this.Rt = C.tr ? wd(C.lep) + 0.03 : R; this.simKey = key; this.treated = C.tr;
     const polar = (a, r) => [Math.cos(a) * r, Math.sin(a) * r];
-    const away = (p, rmin) => { const d = Math.hypot(p.fx, p.fy) || 0.001; if (d >= rmin) return [p.fx, p.fy]; const k = (rmin + 0.02 + p.u * 0.06) / d; return [p.fx * k, p.fy * k]; };
+    const SE = this.seams, firstAt = dmin => { let lo = 0, hi = SE.length; while (lo < hi) { const m = (lo + hi) >> 1; if (SE[m].d < dmin) lo = m + 1; else hi = m; } return lo; };
+    const onSeam = (p, lo, hi) => { const a = Math.min(firstAt(lo), SE.length - 1), b = hi == null ? SE.length : Math.max(a + 1, firstAt(hi)); const q = SE[Math.min(SE.length - 1, a + Math.floor(p.u2 * (b - a)))]; p.to = q.ang; return [q.x + p.jx * 0.4, q.y + p.jy * 0.4]; };
     for (const p of this.P) {
       let vis = false, x = p.fx, y = p.fy, al = 1;
       if (p.k === 'T') {
         if (p.i < C.lep) { const w = W[C.off + p.i]; vis = true; al = 0.9; x = w.x + p.jx; y = w.y + p.jy; }
       } else if (p.k === 'V') {
-        if (p.i < C.inv) { const g = this.rings[Math.floor(p.i / 16)], rr = g.r * 0.72 * Math.sqrt(p.u); vis = true; al = 0.9; x = g.cx + Math.cos(p.a) * rr; y = g.cy + Math.sin(p.a) * rr; }
+        if (p.i < C.inv) { [x, y] = polar(p.a, (wd(C.off) - 0.006) * Math.sqrt(p.u)); vis = true; al = 0.9; } // invasive: solid sheet across the effaced centre
       } else if (p.k === 'I') {
         if (p.i < C.tc) {
           vis = true;
-          if (C.tr) [x, y] = polar(p.a, R * Math.sqrt(p.u));
+          if (C.tr) [x, y] = onSeam(p, 0, p.u < 0.4 ? wd(C.lep) + 0.05 : R);
           else if (p.i < C.touch) { const w = W[C.off + C.lep - 1 - Math.floor(p.u * Math.min(60, C.lep))]; x = w.x + 0.009 * Math.cos(p.a); y = w.y + 0.009 * Math.sin(p.a); }
-          else [x, y] = away(p, R * 1.15);
+          else [x, y] = onSeam(p, R * 1.15);
         }
       } else if (p.k === 'M') {
         if (p.i < C.m1 + C.m2) {
           vis = true; p.tm = p.i < C.m1 ? 1 : 0;
-          [x, y] = polar(p.a, C.tr ? R * 0.95 * Math.sqrt(p.u) : key === 'u540' ? R * (0.92 + 0.3 * p.u) : R * (1.2 + 1.6 * p.u));
+          [x, y] = polar(p.a, C.tr ? R * 0.95 * Math.sqrt(p.u) : key === 'u540' ? (p.u < 0.55 ? R * 0.88 * Math.sqrt(p.u2) : R * (0.92 + 0.3 * p.u)) : key === 's180' ? R * (0.9 + 0.8 * p.u) : R * (1.2 + 1.6 * p.u));
         }
       } else if (p.k === 'F') {
         if (p.i < C.fb) {
           vis = true; al = 0.9;
           if (p.i < C.cap) {
-            if (C.tr) { [x, y] = polar(p.a, R * (0.2 + 0.8 * Math.sqrt(p.u))); p.to = p.o; }
-            else { [x, y] = polar(p.a, R * (1.0 + 0.22 * p.u)); p.to = p.a + Math.PI / 2; }
-          } else { [x, y] = away(p, R * 1.2); p.to = p.o; }
+            if (C.tr) { if (p.u < 0.5) [x, y] = onSeam(p, 0, R); else { [x, y] = polar(p.a, R * Math.sqrt(p.u2)); p.to = p.o; } }
+            else if (key === 'u540' && p.u < 0.5) { [x, y] = polar(p.a, R * 0.92 * Math.sqrt(p.u2)); p.to = p.o; }
+            else [x, y] = onSeam(p, R * 0.98, R * 1.25);
+          } else [x, y] = onSeam(p, R * 1.2);
         }
       } else if (p.k === 'S') {
-        if (p.i < C.sig) { vis = true; al = 0.75; [x, y] = polar(p.a, R * (0.3 + 1.1 * p.u)); }
+        if (p.i < C.sig) { vis = true; al = 0.75; [x, y] = onSeam(p, R * 0.2, R * 1.4); }
       } else if (p.k === 'L') {
-        vis = p.i >= C.hide; al = 0.55;
+        if (C.tr) { vis = p.i >= C.lep; al = p.i < C.hide ? 0.42 : 0.55; } else { vis = p.i >= C.hide; al = 0.55; }
       }
       p.ta = vis ? al : 0;
       if (vis) { p.tx = x; p.ty = y; }
@@ -807,7 +926,7 @@ class Component extends DCLogic {
     g = ctx.createRadialGradient(cx, cy, 0, cx, cy, hr); g.addColorStop(0, `rgba(240,80,156,${0.2 * (1 - this.tr * 0.7)})`); g.addColorStop(1, 'rgba(240,80,156,0)');
     ctx.fillStyle = g; ctx.fillRect(cx - hr, cy - hr, hr * 2, hr * 2);
     if (this.tr > 0.01) { const r2 = S * 0.34; g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r2); g.addColorStop(0, `rgba(79,214,245,${0.16 * this.tr})`); g.addColorStop(1, 'rgba(79,214,245,0)'); ctx.fillStyle = g; ctx.fillRect(cx - r2, cy - r2, r2 * 2, r2 * 2); }
-    const JIT = { V: 0.9, T: 0.7, I: 1.4, M: 1.1, F: 0.6, L: 0.3, S: 3.2 }, SZ = { V: 2.5, T: 2.3, I: 1.9, M: 3.9, F: 2.2, L: 1.7, S: 1.1 };
+    const JIT = { V: 0.9, T: 0.7, I: 1.4, M: 1.1, F: 0.6, L: 0.3, S: 3.2 }, SZ = { V: 2.5, T: 2.3, I: 1.9, M: 3.1, F: 2.2, L: 1.7, S: 1.1 };
     for (const p of this.P) {
       p.x += (p.tx - p.x) * 0.035; p.y += (p.ty - p.y) * 0.035; p.al += (p.ta - p.al) * 0.04; p.m += (p.tm - p.m) * 0.03; p.ang += (p.to - p.ang) * 0.04;
       if ((p.k === 'T' || p.k === 'V') && p.ta > 0 && p.al < 0.02) { p.x = p.tx; p.y = p.ty; }
@@ -818,13 +937,13 @@ class Component extends DCLogic {
       if (p.k === 'M') {
         if (p.m > 0.01) { ctx.globalAlpha = p.al * p.m; ctx.drawImage(sp, px - d / 2, py - d / 2, d, d); }
         if (p.m < 0.99) {
-          ctx.globalAlpha = p.al * (1 - p.m) * 0.9; ctx.strokeStyle = '#4FD6F5'; ctx.lineWidth = 1.3 * k;
+          ctx.globalAlpha = p.al * (1 - p.m) * 0.9; ctx.strokeStyle = '#F2C14E'; ctx.lineWidth = 1.3 * k;
           ctx.beginPath(); ctx.arc(px, py, SZ.M * k, 0, 6.2832); ctx.stroke();
           ctx.globalAlpha = p.al * (1 - p.m) * 0.25; ctx.drawImage(sp, px - d / 2, py - d / 2, d, d);
         }
       } else if (p.k === 'F') {
         ctx.globalAlpha = p.al; ctx.save(); ctx.translate(px, py); ctx.rotate(p.ang);
-        ctx.drawImage(sp, -d, -d * 0.18, d * 2, d * 0.36); ctx.restore();
+        ctx.drawImage(sp, -d * 0.7, -d * 0.16, d * 1.4, d * 0.32); ctx.restore();
       } else { ctx.globalAlpha = p.al; ctx.drawImage(sp, px - d / 2, py - d / 2, d, d); }
     }
     ctx.globalAlpha = 1;
@@ -838,7 +957,7 @@ class Component extends DCLogic {
       s0: { count: '666', label: 'Baseline twin', why: [[MAG, 'Built from a spatial gene-expression map of a real patient\'s tumor.'], [CY, '666 tumor cells among 13 cell types, each following real biological rules.']] },
       s180: { count: '1,662', label: 'Treatment decision point', why: [[MAG, 'The tumor grows to 1,662 cells in 180 days.'], [LI, 'Treatment starts here. The twin forks into two futures.']] },
       u540: { count: '3,033', label: 'Untreated', why: [[MAG, 'Suppressive M2 macrophages pile up: 558 cells.'], [LI, 'TGF-β rises 2.2×.'], ['#FF8A5C', 'Invasive tumor cells reach 1,454.']] },
-      t540: { count: '279', label: 'Combination immunotherapy · ~91% fewer', why: [[CY, 'Macrophages switch to attack mode: 184 M1 vs 11 M2.'], [CY, 'The PD-L1 brake on T cells is released.'], [LI, 'TGF-β falls 74%, but scar tissue (ECM) keeps building.']] }
+      t540: { count: '279', label: 'Combination immunotherapy · ~91% fewer', why: [['#F2C14E', 'Macrophages switch to attack mode: 184 M1 vs 11 M2.'], [CY, 'The PD-L1 brake on T cells is released.'], [LI, 'TGF-β falls 74%, but scar tissue (ECM) keeps building.']] }
     }[key];
     const good = key === 't540';
     const pill = on => ({ bg: on ? '#fff' : 'transparent', fg: on ? '#050909' : '#C9D6D4' });
