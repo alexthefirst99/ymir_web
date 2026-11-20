@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<title>Ymir</title>
+</head>
+<body>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#050909"/><circle cx="50" cy="50" r="20" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.5"/><circle cx="44" cy="45" r="5" fill="#F0509C"/><circle cx="57" cy="47" r="4" fill="#4FD6F5"/><circle cx="49" cy="57" r="4.3" fill="#3FD68C"/></svg></template>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500&amp;family=Unbounded:wght@300;400&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:#050909}
+body{margin:0;background:#050909;color:#fff;-webkit-font-smoothing:antialiased}
+a{color:#C8F169;text-decoration:none}
+a:hover{color:#fff}
+input::placeholder{color:#8FA0A0}
+select option{background:#0b1514;color:#fff}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="position:relative; min-height:100vh; background:#050909; color:#fff; font-family:Sora, system-ui, sans-serif; overflow-x:clip;">
+
+<sc-if value="{{ showGrain }}" hint-placeholder-val="{{ true }}">
+<div aria-hidden="true" style="position:fixed; inset:0; z-index:60; pointer-events:none; opacity:0.11; mix-blend-mode:soft-light; background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22180%22 height=%22180%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');"></div>
+</sc-if>
+
+<div data-progress="" aria-hidden="true" style="position:fixed; left:0; top:0; width:100%; height:2px; z-index:70; transform-origin:0 50%; transform:scaleX(0); background:linear-gradient(90deg, #3FD68C, #4FD6F5, #F0509C); box-shadow:0 0 12px rgba(79,214,245,0.8); pointer-events:none;"></div>
+<header data-header="" style="position:sticky; top:0; z-index:50; transition:background .35s; background:rgba(5,9,9,0.55); backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%); border-bottom:1px solid rgba(255,255,255,0.07); box-shadow:inset 0 -1px 0 rgba(255,255,255,0.02);">
+  <div style="max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px); height:72px; display:flex; align-items:center; justify-content:space-between; gap:24px; transition:height .35s cubic-bezier(.2,.7,.2,1);" data-header-inner="">
+    <a href="#top" aria-label="Ymir home" style="display:flex; align-items:center; gap:12px; color:#fff;">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1"></circle><circle cx="11" cy="12" r="3.4" fill="#F0509C" style="filter:drop-shadow(0 0 3px #F0509C)"></circle><circle cx="19.5" cy="13" r="2.7" fill="#4FD6F5" style="filter:drop-shadow(0 0 3px #4FD6F5)"></circle><circle cx="14" cy="20" r="2.9" fill="#3FD68C" style="filter:drop-shadow(0 0 3px #3FD68C)"></circle></svg>
+      <span style="font-family:Unbounded, sans-serif; font-weight:400; font-size:15px; letter-spacing:0.34em;">YMIR</span>
+    </a>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Primary" style="display:flex; gap:6px; align-items:center;">
+        <a href="#platform" style="color:#C9D6D4; font-size:14px; padding:12px 18px; border-radius:999px; transition:background .2s, color .2s;" style-hover="background:rgba(255,255,255,0.06); color:#fff;">Platform</a>
+        <a href="#results" style="color:#C9D6D4; font-size:14px; padding:12px 18px; border-radius:999px; transition:background .2s, color .2s;" style-hover="background:rgba(255,255,255,0.06); color:#fff;">Results</a>
+        <a href="#team" style="color:#C9D6D4; font-size:14px; padding:12px 18px; border-radius:999px; transition:background .2s, color .2s;" style-hover="background:rgba(255,255,255,0.06); color:#fff;">Team</a>
+        <a href="evidence.html" style="display:flex; align-items:center; gap:8px; margin-left:8px; border:1px solid rgba(255,255,255,0.16); color:#C9D6D4; font-size:14px; padding:12px 18px; border-radius:999px; transition:background .2s, color .2s;" style-hover="background:rgba(255,255,255,0.06); color:#fff;">Evidence<svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"></path></svg></a>
+      </nav>
+    </sc-if>
+    <a data-magnet="" href="#partners" style="display:flex; align-items:center; gap:12px; height:46px; padding:0 6px 0 20px; border-radius:999px; background:#fff; color:#050909; font-size:14px; font-weight:500; transition:transform .25s, box-shadow .25s;" style-hover="transform:translateY(-2px); box-shadow:0 10px 36px rgba(200,241,105,0.28); color:#050909;">Request a demo<span style="width:34px; height:34px; border-radius:50%; background:#050909; display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+  </div>
+</header>
+
+<section id="top" data-screen-label="Hero" style="position:relative; padding:clamp(40px,6vw,88px) 0 clamp(64px,8vw,120px);">
+  <div aria-hidden="true" data-parallax="0.18" style="position:absolute; left:-180px; top:-120px; width:640px; height:640px; border-radius:50%; background:radial-gradient(circle, rgba(47,209,138,0.32), rgba(47,209,138,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div aria-hidden="true" data-parallax="-0.12" style="position:absolute; right:-160px; top:40px; width:720px; height:720px; border-radius:50%; background:radial-gradient(circle, rgba(214,58,143,0.34), rgba(214,58,143,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div aria-hidden="true" data-parallax="0.1" style="position:absolute; right:22%; bottom:-120px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(31,181,214,0.3), rgba(31,181,214,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+
+  <div style="position:relative; max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px); display:flex; flex-wrap:wrap; gap:clamp(40px,4vw,64px); align-items:center;">
+    <div data-reveal-stagger="" style="flex:1 1 460px; min-width:0; display:flex; flex-direction:column; gap:30px;">
+      <div style="align-self:flex-start; display:flex; align-items:center; gap:10px; padding:10px 16px; border-radius:999px; background:rgba(255,255,255,0.05); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.14); font-size:13px; color:#C9D6D4; letter-spacing:0.02em;">
+        <span style="width:7px; height:7px; border-radius:50%; background:#C8F169; box-shadow:0 0 10px #C8F169;"></span>Clinical world model · partnering for 2026
+      </div>
+      <h1 style="margin:0; font-weight:200; font-size:clamp(44px,5.6vw,84px); line-height:1.02; letter-spacing:-0.045em; text-wrap:balance;">Test the treatment on the <span style="color:#C8F169; font-weight:300; text-shadow:0 0 36px rgba(200,241,105,0.55);">twin</span>, before the patient.</h1>
+      <p style="margin:0; max-width:520px; font-size:clamp(16px,1.35vw,19px); line-height:1.6; color:#C9D6D4; font-weight:300; text-wrap:pretty;">Ymir turns a routine biopsy slide into a living digital twin of a patient's tissue — thousands of virtual cells following real biology — then plays it forward to show which treatment works, and why.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:12px;">
+        <a data-magnet="" href="#partners" style="display:flex; align-items:center; gap:14px; height:56px; padding:0 7px 0 26px; border-radius:999px; background:#fff; color:#050909; font-size:15px; font-weight:500; transition:transform .25s, box-shadow .25s;" style-hover="transform:translateY(-2px); box-shadow:0 14px 44px rgba(200,241,105,0.3); color:#050909;">Request a demo<span style="width:42px; height:42px; border-radius:50%; background:#050909; display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        <a data-magnet="" href="#results" style="display:flex; align-items:center; gap:14px; height:56px; padding:0 7px 0 24px; border-radius:999px; background:rgba(255,255,255,0.06); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.14); box-shadow:inset 0 1px 0 rgba(255,255,255,0.16); color:#fff; font-size:15px; transition:background .25s, transform .25s;" style-hover="background:rgba(255,255,255,0.12); transform:translateY(-2px); color:#fff;">See the evidence<span style="width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M3 8l4 4 4-4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:clamp(20px,2.4vw,36px); padding-top:26px; border-top:1px solid rgba(255,255,255,0.08);">
+        <div style="display:flex; flex-direction:column; gap:6px;"><span style="font-family:Unbounded, sans-serif; font-weight:300; font-size:clamp(22px,2vw,28px); letter-spacing:-0.02em;">18/22</span><span style="font-size:13px; color:#8FA0A0;">outcomes matched</span></div>
+        <div style="display:flex; flex-direction:column; gap:6px;"><span style="font-family:Unbounded, sans-serif; font-weight:300; font-size:clamp(22px,2vw,28px); letter-spacing:-0.02em;" data-count="9008">9,008</span><span style="font-size:13px; color:#8FA0A0;">curated biological rules</span></div>
+        <div style="display:flex; flex-direction:column; gap:6px;"><span style="font-family:Unbounded, sans-serif; font-weight:300; font-size:clamp(22px,2vw,28px); letter-spacing:-0.02em;">0</span><span style="font-size:13px; color:#8FA0A0;">per-patient tuning</span></div>
+      </div>
+    </div>
+
+    <div data-reveal="" data-delay="250" data-glow="" aria-label="Tumor twin concept view" role="region" style="flex:1.2 1 560px; min-width:0; padding:clamp(10px,1.2vw,16px); border-radius:38px; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(28px) saturate(150%); -webkit-backdrop-filter:blur(28px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.24), inset 0 -30px 60px rgba(0,0,0,0.25), 0 50px 120px -30px rgba(0,0,0,0.8); display:flex; flex-direction:column; gap:14px;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; padding:6px 10px 0;">
+        <span style="display:flex; align-items:center; gap:10px; font-size:12px; letter-spacing:0.18em; text-transform:uppercase; color:#fff;"><span style="width:7px; height:7px; border-radius:50%; background:#F0509C; box-shadow:0 0 10px #F0509C;"></span>Tumor twin · concept view</span>
+        <span style="font-size:12px; color:#8FA0A0; letter-spacing:0.04em;">Lung cancer · unseen patient · simplified</span>
+      </div>
+
+      <div style="position:relative; aspect-ratio:1.3; border-radius:26px; overflow:hidden; background:#030808; border:1px solid rgba(255,255,255,0.07); box-shadow:inset 0 0 60px rgba(0,0,0,0.8);">
+        <canvas ref="{{ canvasRef }}" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
+        <div style="position:absolute; left:12px; top:12px; padding:12px 16px; border-radius:20px; background:rgba(5,12,12,0.5); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.14); display:flex; flex-direction:column; gap:2px;" aria-live="polite">
+          <span style="font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#C9D6D4;">Tumor cells</span>
+          <span style="font-family:Unbounded, sans-serif; font-weight:300; font-size:clamp(26px,2.6vw,36px); letter-spacing:-0.02em; color:{{ countColor }}; text-shadow:{{ countGlow }}; transition:color .6s, text-shadow .6s;">{{ count }}</span>
+          <span style="font-size:12px; color:#C9D6D4;">{{ stateLabel }}</span>
+        </div>
+        <div style="position:absolute; right:12px; top:12px; padding:10px 14px; border-radius:18px; background:rgba(5,12,12,0.5); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.1); text-align:right; display:flex; flex-direction:column; gap:2px;">
+          <span style="font-size:11px; letter-spacing:0.14em; color:#C9D6D4;">DAY</span>
+          <span style="font-family:Unbounded, sans-serif; font-weight:300; font-size:20px;">{{ day }}</span>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:6px 16px; padding:0 10px; font-size:12px; color:#C9D6D4;">
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:8px; height:8px; border-radius:50%; background:#F0509C; box-shadow:0 0 8px #F0509C;"></span>Tumor, lepidic</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:8px; height:8px; border-radius:50%; background:#FF8A5C; box-shadow:0 0 8px #FF8A5C;"></span>Tumor, invasive</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; border-radius:50%; background:#4FD6F5; box-shadow:0 0 8px #4FD6F5;"></span>T cell</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:10px; height:10px; border-radius:50%; border:1.4px solid #4FD6F5;"></span>Macrophage, suppressive</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:10px; height:10px; border-radius:50%; background:#4FD6F5; box-shadow:0 0 8px #4FD6F5;"></span>Macrophage, attack</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:12px; height:4px; border-radius:4px; background:#3FD68C; box-shadow:0 0 8px #3FD68C;"></span>Fibroblast</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:7px; height:7px; border-radius:50%; background:#6E8584;"></span>Lung lining</span>
+        <span style="display:flex; align-items:center; gap:7px;"><span style="width:5px; height:5px; border-radius:50%; background:#C8F169; box-shadow:0 0 6px #C8F169;"></span>TGF-β signal</span>
+      </div>
+
+      <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding:0 4px;">
+        <div role="group" aria-label="Day" style="display:flex; align-items:center; gap:2px; padding:4px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.12);">
+          <span style="font-size:12px; color:#8FA0A0; padding:0 10px 0 12px;">Day</span>
+          <sc-for list="{{ days }}" as="d" hint-placeholder-count="3">
+            <button type="button" aria-pressed="{{ d.on }}" onClick="{{ d.onClick }}" style="height:44px; min-width:58px; padding:0 14px; border:none; border-radius:999px; cursor:pointer; font-family:Unbounded, sans-serif; font-weight:300; font-size:13px; background:{{ d.bg }}; color:{{ d.fg }}; transition:background .25s, color .25s;">{{ d.label }}</button>
+          </sc-for>
+        </div>
+        <div role="group" aria-label="Treatment" style="display:flex; align-items:center; gap:2px; padding:4px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.12);">
+          <sc-for list="{{ txs }}" as="t" hint-placeholder-count="2">
+            <button type="button" aria-pressed="{{ t.on }}" onClick="{{ t.onClick }}" style="height:44px; padding:0 18px; border:none; border-radius:999px; cursor:pointer; font-size:13px; background:{{ t.bg }}; color:{{ t.fg }}; transition:background .25s, color .25s, opacity .25s;">{{ t.label }}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ txHint }}" hint-placeholder-val="{{ true }}">
+          <span style="font-size:12px; color:#C9D6D4;">Treatment starts at day 180 · pick one to see day 540</span>
+        </sc-if>
+        <button type="button" onClick="{{ play }}" style="height:52px; display:flex; align-items:center; gap:10px; padding:0 18px 0 6px; border-radius:999px; cursor:pointer; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); box-shadow:inset 0 1px 0 rgba(255,255,255,0.14); color:#fff; font-size:13px; transition:background .25s;" style-hover="background:rgba(255,255,255,0.12);"><span style="width:40px; height:40px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center;"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="#050909"></path></svg></span>{{ playLabel }}</button>
+      </div>
+
+      <div style="position:relative; margin:4px 14px 0; height:42px;" aria-hidden="true">
+        <div style="position:absolute; left:0; right:0; top:8px; height:3px; border-radius:3px; background:rgba(255,255,255,0.1);"></div>
+        <div style="position:absolute; left:0; top:8px; height:3px; border-radius:3px; width:{{ pct }}; background:{{ fillColor }}; box-shadow:0 0 12px {{ fillColor }}; transition:width .9s cubic-bezier(.2,.7,.2,1), background .6s;"></div>
+        <div style="position:absolute; left:33.33%; top:2px; width:1px; height:15px; background:rgba(255,255,255,0.5);"></div>
+        <span style="position:absolute; left:0; top:20px; font-size:11px; color:#8FA0A0;">Day 0</span>
+        <span style="position:absolute; left:33.33%; top:20px; transform:translateX(-50%); font-size:11px; color:#C9D6D4; white-space:nowrap;">180 · treatment starts</span>
+        <span style="position:absolute; right:0; top:20px; font-size:11px; color:#8FA0A0;">540</span>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:8px; padding:0 4px;">
+        <span style="font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#8FA0A0; padding:0 10px;">Why</span>
+        <sc-for list="{{ why }}" as="w" hint-placeholder-count="3">
+          <div style="display:flex; align-items:center; gap:12px; padding:11px 18px; border-radius:22px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); font-size:14px; line-height:1.45; color:#E6EEED;">
+            <span style="flex:none; width:8px; height:8px; border-radius:50%; background:{{ w.c }}; box-shadow:0 0 10px {{ w.c }};"></span>{{ w.t }}
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; padding:2px 6px 6px 12px;">
+        <p style="margin:0; flex:1 1 260px; font-size:12px; line-height:1.5; color:#8FA0A0;">Concept illustration: 7 of 13 cell types shown; each tumor dot ≈ 6 cells. Counts and mechanisms from Ymir's lung cancer simulation of an unseen patient.</p>
+        <a href="#showcase" style="flex:none; display:flex; align-items:center; gap:8px; height:44px; padding:0 16px; border-radius:999px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); box-shadow:inset 0 1px 0 rgba(255,255,255,0.16); color:#fff; font-size:13px; transition:background .25s;" style-hover="background:rgba(255,255,255,0.12); color:#fff;">Watch the real simulations<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M3 8l4 4 4-4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="showcase" data-screen-label="Showcase" style="position:relative; padding:0 0 clamp(64px,8vw,120px);">
+  <div aria-hidden="true" data-parallax="0.14" style="position:absolute; left:30%; top:10%; width:640px; height:640px; border-radius:50%; background:radial-gradient(circle, rgba(31,181,214,0.26), rgba(31,181,214,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div style="position:relative; max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px); display:flex; flex-direction:column; gap:clamp(28px,3.5vw,44px);">
+    <div data-reveal-stagger="" style="display:flex; flex-direction:column; gap:18px;">
+      <span style="font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#F0509C;">Showcase</span>
+      <h2 style="margin:0; font-weight:200; font-size:clamp(38px,4.6vw,68px); line-height:1.04; letter-spacing:-0.045em; text-wrap:balance;">Watch the twin run.</h2>
+    </div>
+    <a href="https://guangyuwanglab2021.github.io/ymir-showcase/" target="_blank" rel="noopener" style="align-self:flex-start; display:flex; align-items:center; gap:10px; height:46px; padding:0 18px; border-radius:999px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); box-shadow:inset 0 1px 0 rgba(255,255,255,0.16); color:#fff; font-size:14px; transition:background .25s;" style-hover="background:rgba(255,255,255,0.12); color:#fff;">All simulation videos<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"></path></svg></a>
+    <div data-reveal-stagger="" data-step="110" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 520px), 1fr)); gap:18px;">
+
+      <!-- VIDEO 1 -->
+      <figure data-glow="" style="position:relative; margin:0; padding:10px; border-radius:34px; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 80px -24px rgba(0,0,0,0.75); display:flex; flex-direction:column; gap:12px; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(240,80,156,0.45);">
+        <div data-video="" style="position:relative; aspect-ratio:16/9; border-radius:26px; overflow:hidden; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 10px, rgba(255,255,255,0) 10px 20px), #071010; border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center;">
+          <!-- To swap: change src (video) and poster (cover image). -->
+          <sc-if value="{{ cardiacA }}" hint-placeholder-val="{{ true }}">
+            <video src="https://guangyuwanglab2021.github.io/ymir-showcase/media/case1/experiment-vs-trained.mp4" poster="https://guangyuwanglab2021.github.io/ymir-showcase/posters/case1-experiment-vs-trained.jpg" aria-label="Cardiac organoid: experiment vs simulation" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#030808;"></video>
+          </sc-if>
+          <sc-if value="{{ cardiacB }}" hint-placeholder-val="{{ false }}">
+            <video src="https://guangyuwanglab2021.github.io/ymir-showcase/media/case1/calcium-withdrawal.mp4" poster="https://guangyuwanglab2021.github.io/ymir-showcase/posters/case1-calcium-withdrawal.jpg" aria-label="Cardiac organoid: normal Ca²⁺ vs Ca²⁺ withdrawal" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#030808;"></video>
+          </sc-if>
+          <span aria-hidden="true" style="position:absolute; left:14px; top:14px; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:rgba(5,12,12,0.5); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.12); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; pointer-events:none;"><span style="width:6px; height:6px; border-radius:50%; background:#F0509C; box-shadow:0 0 8px #F0509C;"></span>Case 01</span>
+        </div>
+        <div aria-hidden="true" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:0 4px; font-size:12px; letter-spacing:0.06em; color:#C9D6D4; text-align:center;"><span>{{ c1L }}</span><span>{{ c1R }}</span></div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:0 4px;">
+          <div role="group" aria-label="Cardiac video" style="display:flex; align-items:center; gap:2px; padding:4px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); box-shadow:inset 0 1px 0 rgba(255,255,255,0.14);">
+            <sc-for list="{{ cardiacTabs }}" as="c" hint-placeholder-count="2">
+              <button type="button" aria-pressed="{{ c.on }}" onClick="{{ c.onClick }}" style="height:40px; padding:0 14px; border:none; border-radius:999px; cursor:pointer; font-size:12px; background:{{ c.bg }}; color:{{ c.fg }}; transition:background .25s, color .25s;">{{ c.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <figcaption style="display:flex; flex-direction:column; gap:4px; padding:2px 14px 10px;">
+          <span style="font-size:18px; font-weight:300; letter-spacing:-0.01em;">Cardiac organoid simulation</span>
+          <span style="font-size:13px; color:#8FA0A0;">Video S1</span>
+        </figcaption>
+      </figure>
+
+      <!-- VIDEO 2 -->
+      <figure data-glow="" style="position:relative; margin:0; padding:10px; border-radius:34px; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 80px -24px rgba(0,0,0,0.75); display:flex; flex-direction:column; gap:12px; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(79,214,245,0.45);">
+        <div data-video="" style="position:relative; aspect-ratio:16/9; border-radius:26px; overflow:hidden; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 10px, rgba(255,255,255,0) 10px 20px), #071010; border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center;">
+          <!-- To swap: change src (video) and poster (cover image). -->
+          <video src="{{ c2Src }}" poster="{{ c2Poster }}" aria-label="Wound healing simulation" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#030808;"></video>
+          <span aria-hidden="true" style="position:absolute; left:14px; top:14px; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:rgba(5,12,12,0.5); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.12); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; pointer-events:none;"><span style="width:6px; height:6px; border-radius:50%; background:#4FD6F5; box-shadow:0 0 8px #4FD6F5;"></span>Case 02</span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:0 4px;">
+          <div role="group" aria-label="Wound video" style="display:flex; align-items:center; gap:2px; padding:4px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); box-shadow:inset 0 1px 0 rgba(255,255,255,0.14);">
+            <sc-for list="{{ woundTabs }}" as="c" hint-placeholder-count="2">
+              <button type="button" aria-pressed="{{ c.on }}" onClick="{{ c.onClick }}" style="height:40px; padding:0 14px; border:none; border-radius:999px; cursor:pointer; font-size:12px; background:{{ c.bg }}; color:{{ c.fg }}; transition:background .25s, color .25s;">{{ c.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <figcaption style="display:flex; flex-direction:column; gap:4px; padding:2px 14px 10px;">
+          <span style="font-size:18px; font-weight:300; letter-spacing:-0.01em;">Wound healing simulation</span>
+          <span style="font-size:13px; color:#8FA0A0;">{{ c2Caption }}</span>
+        </figcaption>
+      </figure>
+
+      <!-- VIDEO 3 -->
+      <figure data-glow="" style="position:relative; margin:0; padding:10px; border-radius:34px; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 80px -24px rgba(0,0,0,0.75); display:flex; flex-direction:column; gap:12px; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(63,214,140,0.45);">
+        <div data-video="" style="position:relative; aspect-ratio:16/9; border-radius:26px; overflow:hidden; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 10px, rgba(255,255,255,0) 10px 20px), #071010; border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center;">
+          <!-- To swap: change src (video) and poster (cover image). -->
+          <video src="https://guangyuwanglab2021.github.io/ymir-showcase/media/case3/lung-cancer-fields.mp4" poster="https://guangyuwanglab2021.github.io/ymir-showcase/posters/case3-lung-cancer-fields.jpg" aria-label="Lung cancer progression, day 0 to 540" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#030808;"></video>
+          <span aria-hidden="true" style="position:absolute; left:14px; top:14px; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:rgba(5,12,12,0.5); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.12); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; pointer-events:none;"><span style="width:6px; height:6px; border-radius:50%; background:#3FD68C; box-shadow:0 0 8px #3FD68C;"></span>Case 03</span>
+        </div>
+        <figcaption style="display:flex; flex-direction:column; gap:4px; padding:2px 14px 10px;">
+          <span style="font-size:18px; font-weight:300; letter-spacing:-0.01em;">Lung cancer progression simulation</span>
+          <span style="font-size:13px; color:#8FA0A0;">Tumor tissue and molecular signals, day 0 to 540 · Video S4</span>
+        </figcaption>
+      </figure>
+
+      <!-- VIDEO 4 -->
+      <figure data-glow="" style="position:relative; margin:0; padding:10px; border-radius:34px; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 80px -24px rgba(0,0,0,0.75); display:flex; flex-direction:column; gap:12px; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(200,241,105,0.45);">
+        <div data-video="" style="position:relative; aspect-ratio:16/9; border-radius:26px; overflow:hidden; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 10px, rgba(255,255,255,0) 10px 20px), #071010; border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center;">
+          <!-- To swap: change src (video) and poster (cover image). -->
+          <video src="{{ ptSrc }}" poster="{{ ptPoster }}" aria-label="{{ ptLabel }}" autoPlay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="metadata" style="position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#030808;"></video>
+          <span aria-hidden="true" style="position:absolute; left:14px; top:14px; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:rgba(5,12,12,0.5); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.12); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:#fff; pointer-events:none;"><span style="width:6px; height:6px; border-radius:50%; background:#C8F169; box-shadow:0 0 8px #C8F169;"></span>Case 04</span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:0 4px;">
+          <div role="group" aria-label="Patient video" style="display:flex; align-items:center; gap:2px; padding:4px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); box-shadow:inset 0 1px 0 rgba(255,255,255,0.14);">
+            <sc-for list="{{ ptTabs }}" as="c" hint-placeholder-count="3">
+              <button type="button" aria-pressed="{{ c.on }}" onClick="{{ c.onClick }}" style="height:40px; padding:0 14px; border:none; border-radius:999px; cursor:pointer; font-size:12px; background:{{ c.bg }}; color:{{ c.fg }}; transition:background .25s, color .25s;">{{ c.label }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ ptPick }}" hint-placeholder-val="{{ false }}">
+            <div role="group" aria-label="Patient" style="display:flex; align-items:center; gap:2px; padding:4px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); box-shadow:inset 0 1px 0 rgba(255,255,255,0.14);">
+            <sc-for list="{{ ptNums }}" as="n" hint-placeholder-count="3">
+              <button type="button" aria-pressed="{{ n.on }}" onClick="{{ n.onClick }}" style="height:40px; padding:0 14px; border:none; border-radius:999px; cursor:pointer; font-size:12px; background:{{ n.bg }}; color:{{ n.fg }}; transition:background .25s, color .25s;">{{ n.label }}</button>
+            </sc-for>
+          </div>
+          </sc-if>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:6px 14px; padding:2px 8px; font-size:11px; color:#C9D6D4;" aria-label="Cell types">
+          <span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#bc80bd;"></span>Tumor (lepidic)</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#d62728;"></span>Tumor (invasive)</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#008a92;"></span>Fibroblast</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#02639a;"></span>CAF</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#c49c94;"></span>Macrophage M0</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#8c6d31;"></span>Macrophage M1</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#8c564b;"></span>Macrophage M2</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#b3de69;"></span>CD8 T</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#2ca02c;"></span>CD4 T</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#bcbd22;"></span>Treg</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#fb8072;"></span>Endothelial</span><span style="display:flex; align-items:center; gap:6px;"><span style="width:9px; height:9px; border-radius:2px; background:#bebada;"></span>Alveolar epithelium</span>
+        </div>
+        <figcaption style="display:flex; flex-direction:column; gap:4px; padding:2px 14px 10px;">
+          <span style="font-size:18px; font-weight:300; letter-spacing:-0.01em;">Patient-specific treatment simulation</span>
+          <span style="font-size:13px; color:#8FA0A0;">{{ ptCaption }}</span>
+        </figcaption>
+      </figure>
+
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Problem" style="position:relative; padding:clamp(56px,7vw,96px) 0; background:linear-gradient(90deg, rgba(214,58,143,0.1), rgba(14,30,28,0.35) 45%, rgba(14,30,28,0.2)); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-top:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.06); box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);">
+  <div aria-hidden="true" data-parallax="-0.16" style="position:absolute; left:4%; top:50%; width:520px; height:520px; transform:translateY(-50%); border-radius:50%; background:radial-gradient(circle, rgba(214,58,143,0.3), rgba(214,58,143,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div style="position:relative; max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px); display:flex; flex-wrap:wrap; align-items:center; gap:clamp(24px,5vw,80px);">
+    <div data-reveal="" style="font-family:Unbounded, sans-serif; font-weight:300; font-size:clamp(104px,15vw,220px); line-height:0.9; letter-spacing:-0.05em; color:#fff; text-shadow:0 0 50px rgba(240,80,156,0.7), 0 0 120px rgba(240,80,156,0.4);">9/10</div>
+    <div data-reveal-stagger="" data-delay="150" style="flex:1 1 420px; min-width:0; display:flex; flex-direction:column; gap:26px;">
+      <p style="margin:0; font-weight:200; font-size:clamp(26px,3vw,44px); line-height:1.18; letter-spacing:-0.03em; text-wrap:pretty;">drugs that reach human trials fail — most often because they don't work in people. <span style="color:#C8F169; font-weight:300;">Ymir lets you find out first.</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="platform" data-screen-label="Platform" style="position:relative; padding:clamp(72px,9vw,140px) 0 clamp(56px,6vw,96px);">
+  <div aria-hidden="true" data-parallax="0.14" style="position:absolute; right:-120px; top:180px; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle, rgba(31,181,214,0.28), rgba(31,181,214,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div aria-hidden="true" data-parallax="-0.1" style="position:absolute; left:20%; bottom:-80px; width:560px; height:460px; border-radius:50%; background:radial-gradient(circle, rgba(47,209,138,0.22), rgba(47,209,138,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div style="position:relative; max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px); display:flex; flex-direction:column; gap:clamp(32px,4vw,52px);">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:28px;">
+      <div data-reveal-stagger="" style="flex:1 1 520px; min-width:0; display:flex; flex-direction:column; gap:18px;">
+        <span style="font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#C8F169;">Platform</span>
+        <h2 style="margin:0; font-weight:200; font-size:clamp(38px,4.6vw,68px); line-height:1.04; letter-spacing:-0.045em; text-wrap:balance;">A world model for living tissue.</h2>
+      </div>
+      <p data-reveal="" data-delay="150" style="flex:0 1 440px; margin:0; font-size:16px; line-height:1.65; color:#C9D6D4; font-weight:300; text-wrap:pretty;">World models like NVIDIA Cosmos predict how the physical world reacts before a robot acts. Ymir predicts how tissue reacts before a doctor treats — built from five modules. It also models tissue stiffness and pressure, which can block drugs and squeeze blood vessels.</p>
+    </div>
+
+    <ol data-reveal-stagger="" data-step="70" aria-label="How it works" style="list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+      <li style="display:flex; align-items:center; gap:10px; padding:10px 18px 10px 10px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.12); font-size:14px; color:#fff;"><span style="width:28px; height:28px; border-radius:50%; background:rgba(200,241,105,0.16); color:#C8F169; font-family:Unbounded, sans-serif; font-size:11px; display:flex; align-items:center; justify-content:center;">1</span>Capture<span style="color:#8FA0A0;">biopsy slide</span></li>
+      <li aria-hidden="true" style="width:24px; height:1px; background:rgba(255,255,255,0.25);"></li>
+      <li style="display:flex; align-items:center; gap:10px; padding:10px 18px 10px 10px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.12); font-size:14px; color:#fff;"><span style="width:28px; height:28px; border-radius:50%; background:rgba(63,214,140,0.16); color:#3FD68C; font-family:Unbounded, sans-serif; font-size:11px; display:flex; align-items:center; justify-content:center;">2</span>Build<span style="color:#8FA0A0;">digital twin</span></li>
+      <li aria-hidden="true" style="width:24px; height:1px; background:rgba(255,255,255,0.25);"></li>
+      <li style="display:flex; align-items:center; gap:10px; padding:10px 18px 10px 10px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.12); font-size:14px; color:#fff;"><span style="width:28px; height:28px; border-radius:50%; background:rgba(79,214,245,0.16); color:#4FD6F5; font-family:Unbounded, sans-serif; font-size:11px; display:flex; align-items:center; justify-content:center;">3</span>Simulate<span style="color:#8FA0A0;">treatments A, B, C</span></li>
+      <li aria-hidden="true" style="width:24px; height:1px; background:rgba(255,255,255,0.25);"></li>
+      <li style="display:flex; align-items:center; gap:10px; padding:10px 18px 10px 10px; border-radius:999px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.12); font-size:14px; color:#fff;"><span style="width:28px; height:28px; border-radius:50%; background:rgba(240,80,156,0.18); color:#F0509C; font-family:Unbounded, sans-serif; font-size:11px; display:flex; align-items:center; justify-content:center;">4</span>Decide<span style="color:#8FA0A0;">what works, and why</span></li>
+    </ol>
+
+    <div data-hscroll="" style="position:relative;">
+      <div data-reveal-stagger="" data-step="110" ref="{{ pipeRef }}" style="position:sticky; top:96px; display:flex; gap:18px; overflow-x:auto; scrollbar-width:none; padding:8px 2px 26px; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.18) transparent;">
+
+        <article data-glow="" data-tilt="" style="position:relative; flex:none; width:min(300px,78vw); height:360px; scroll-snap-align:start; padding:28px; border-radius:34px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; justify-content:space-between; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="border-color:rgba(200,241,105,0.4);">
+          <div aria-hidden="true" style="position:absolute; right:-80px; top:-80px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle, rgba(200,241,105,0.42), rgba(200,241,105,0) 65%); filter:blur(10px);"></div>
+          <div style="position:relative; display:flex; justify-content:space-between; align-items:center;"><span style="font-family:Unbounded, sans-serif; font-size:13px; color:#C9D6D4;">01</span><span style="font-size:12px; padding:6px 12px; border-radius:999px; border:1px solid rgba(200,241,105,0.45); color:#C8F169;">Knowledge</span></div>
+          <div style="position:relative; display:flex; flex-direction:column; gap:12px;"><h3 style="margin:0; font-weight:200; font-size:42px; letter-spacing:-0.04em;">Atlas</h3><p style="margin:0; font-size:15px; line-height:1.55; color:#C9D6D4;">A library of 9,008 curated mathematical forms (5,625 distinct equations) for how cells grow, signal, move and remodel tissue — each checked against its source paper.</p></div>
+        </article>
+
+        <article data-glow="" data-tilt="" style="position:relative; flex:none; width:min(300px,78vw); height:360px; scroll-snap-align:start; padding:28px; border-radius:34px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; justify-content:space-between; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="border-color:rgba(63,214,140,0.45);">
+          <div aria-hidden="true" style="position:absolute; right:-80px; top:-80px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle, rgba(63,214,140,0.45), rgba(63,214,140,0) 65%); filter:blur(10px);"></div>
+          <div style="position:relative; display:flex; justify-content:space-between; align-items:center;"><span style="font-family:Unbounded, sans-serif; font-size:13px; color:#C9D6D4;">02</span><span style="font-size:12px; padding:6px 12px; border-radius:999px; border:1px solid rgba(63,214,140,0.5); color:#3FD68C;">Assembly</span></div>
+          <div style="position:relative; display:flex; flex-direction:column; gap:12px;"><h3 style="margin:0; font-weight:200; font-size:42px; letter-spacing:-0.04em;">Builder</h3><p style="margin:0; font-size:15px; line-height:1.55; color:#C9D6D4;">An AI agent works with a scientist to assemble a disease-specific model — a “mechanism chip.”</p></div>
+        </article>
+
+        <article data-glow="" data-tilt="" style="position:relative; flex:none; width:min(300px,78vw); height:360px; scroll-snap-align:start; padding:28px; border-radius:34px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; justify-content:space-between; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="border-color:rgba(79,214,245,0.45);">
+          <div aria-hidden="true" style="position:absolute; right:-80px; top:-80px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle, rgba(79,214,245,0.45), rgba(79,214,245,0) 65%); filter:blur(10px);"></div>
+          <div style="position:relative; display:flex; justify-content:space-between; align-items:center;"><span style="font-family:Unbounded, sans-serif; font-size:13px; color:#C9D6D4;">03</span><span style="font-size:12px; padding:6px 12px; border-radius:999px; border:1px solid rgba(79,214,245,0.5); color:#4FD6F5;">Forecast</span></div>
+          <div style="position:relative; display:flex; flex-direction:column; gap:12px;"><h3 style="margin:0; font-weight:200; font-size:42px; letter-spacing:-0.04em;">Predict</h3><p style="margin:0; font-size:15px; line-height:1.55; color:#C9D6D4;">Simulates thousands of cells and molecules to forecast tumor growth, healing, scarring and immune response.</p></div>
+        </article>
+
+        <article data-glow="" data-tilt="" style="position:relative; flex:none; width:min(300px,78vw); height:360px; scroll-snap-align:start; padding:28px; border-radius:34px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; justify-content:space-between; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="border-color:rgba(240,80,156,0.45);">
+          <div aria-hidden="true" style="position:absolute; right:-80px; top:-80px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle, rgba(240,80,156,0.45), rgba(240,80,156,0) 65%); filter:blur(10px);"></div>
+          <div style="position:relative; display:flex; justify-content:space-between; align-items:center;"><span style="font-family:Unbounded, sans-serif; font-size:13px; color:#C9D6D4;">04</span><span style="font-size:12px; padding:6px 12px; border-radius:999px; border:1px solid rgba(240,80,156,0.5); color:#F0509C;">Intervene</span></div>
+          <div style="position:relative; display:flex; flex-direction:column; gap:12px;"><h3 style="margin:0; font-weight:200; font-size:42px; letter-spacing:-0.04em;">Act</h3><p style="margin:0; font-size:15px; line-height:1.55; color:#C9D6D4;">Applies treatments to the twin — drugs, combinations, radiation or surgery, alone or in sequence. Built following ASCO clinical practice recommendations.</p></div>
+        </article>
+
+        <article data-glow="" data-tilt="" style="position:relative; flex:none; width:min(300px,78vw); height:360px; scroll-snap-align:start; padding:28px; border-radius:34px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; justify-content:space-between; transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s;" style-hover="border-color:rgba(31,181,214,0.5);">
+          <div aria-hidden="true" style="position:absolute; right:-80px; top:-80px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle, rgba(31,181,214,0.45), rgba(214,58,143,0.2) 40%, rgba(31,181,214,0) 65%); filter:blur(10px);"></div>
+          <div style="position:relative; display:flex; justify-content:space-between; align-items:center;"><span style="font-family:Unbounded, sans-serif; font-size:13px; color:#C9D6D4;">05</span><span style="font-size:12px; padding:6px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.35); color:#fff;">Interpret</span></div>
+          <div style="position:relative; display:flex; flex-direction:column; gap:12px;"><h3 style="margin:0; font-weight:200; font-size:42px; letter-spacing:-0.04em;">Explain</h3><p style="margin:0; font-size:15px; line-height:1.55; color:#C9D6D4;">Links predictions to named biological mechanisms and matches each virtual cell to measured gene-expression profiles from reference atlases.</p></div>
+        </article>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="results" data-screen-label="Results" style="position:relative; padding:clamp(56px,7vw,110px) 0 clamp(72px,9vw,140px);">
+  <div aria-hidden="true" data-parallax="0.2" style="position:absolute; left:-140px; top:200px; width:720px; height:720px; border-radius:50%; background:radial-gradient(circle, rgba(31,181,214,0.32), rgba(31,181,214,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div aria-hidden="true" data-parallax="-0.14" style="position:absolute; right:-100px; bottom:0; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(47,209,138,0.24), rgba(47,209,138,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+  <div style="position:relative; max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px); display:flex; flex-direction:column; gap:clamp(32px,4vw,52px);">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px;">
+      <div data-reveal-stagger="" style="flex:1 1 520px; min-width:0; display:flex; flex-direction:column; gap:18px;">
+        <span style="font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#4FD6F5;">Results</span>
+        <h2 style="margin:0; font-weight:200; font-size:clamp(38px,4.6vw,68px); line-height:1.04; letter-spacing:-0.045em; text-wrap:balance;">Matched in the clinic. Proven in the lab.</h2>
+      </div>
+      <a href="evidence.html" style="display:flex; align-items:center; gap:10px; height:46px; padding:0 18px; border-radius:999px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); box-shadow:inset 0 1px 0 rgba(255,255,255,0.16); color:#fff; font-size:14px; transition:background .25s;" style-hover="background:rgba(255,255,255,0.12); color:#fff;">Full evidence<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:stretch;">
+      <div data-reveal="" data-glow="" style="position:relative; flex:1.45 1 540px; min-width:0; padding:clamp(26px,3.4vw,48px); border-radius:40px; overflow:hidden; background:linear-gradient(160deg, rgba(79,214,245,0.12), rgba(255,255,255,0.02) 45%), rgba(14,30,28,0.5); backdrop-filter:blur(28px) saturate(150%); -webkit-backdrop-filter:blur(28px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.24), 0 50px 120px -30px rgba(0,0,0,0.8); display:flex; flex-direction:column; justify-content:space-between; gap:36px; transition:border-color .35s;" style-hover="border-color:rgba(79,214,245,0.35);">
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <span style="font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#C9D6D4;">Clinical · lung cancer · immunotherapy</span>
+          <span style="font-family:Unbounded, sans-serif; font-weight:300; font-size:clamp(72px,9vw,148px); line-height:0.95; letter-spacing:-0.05em; text-shadow:0 0 60px rgba(79,214,245,0.5);" data-count="81.8" data-dec="1" data-suffix="%">81.8%</span>
+          <p style="margin:0; max-width:560px; font-size:clamp(17px,1.5vw,21px); line-height:1.5; font-weight:300; color:#fff; text-wrap:pretty;">Ymir matched the real treatment response in 18 of 22 patients — using only biopsy slides and routine tests, with no per-patient tuning.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div data-reveal-stagger="" data-pop="" data-step="45" data-delay="300" role="img" aria-label="18 of 22 patient outcomes matched" style="display:grid; grid-template-columns:repeat(11, minmax(0, 28px)); gap:clamp(8px,1.2vw,14px);">
+            <sc-for list="{{ matched }}" as="m" hint-placeholder-count="18"><span style="aspect-ratio:1; border-radius:50%; background:#4FD6F5; box-shadow:0 0 14px rgba(79,214,245,0.8), inset 0 1px 2px rgba(255,255,255,0.6);"></span></sc-for>
+            <sc-for list="{{ missed }}" as="m" hint-placeholder-count="4"><span style="aspect-ratio:1; border-radius:50%; border:1.5px solid rgba(201,214,212,0.6);"></span></sc-for>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px 20px; font-size:13px; color:#C9D6D4;">
+            <span style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%; background:#4FD6F5; box-shadow:0 0 8px #4FD6F5;"></span>Response matched</span>
+            <span style="display:flex; align-items:center; gap:8px;"><span style="width:10px; height:10px; border-radius:50%; border:1.5px solid rgba(201,214,212,0.7);"></span>Not matched</span>
+            <span style="color:#8FA0A0;">Retrospective cohort of 22 patients, Houston Methodist.</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal-stagger="" data-delay="150" data-step="120" style="flex:1 1 360px; min-width:0; display:flex; flex-direction:column; gap:18px;">
+        <div data-glow="" style="position:relative; flex:1; padding:28px; border-radius:32px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:14px; transition:transform .35s, border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(240,80,156,0.4);">
+          <div aria-hidden="true" style="position:absolute; right:-60px; top:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(240,80,156,0.4), rgba(240,80,156,0) 65%); filter:blur(8px);"></div>
+          <span style="position:relative; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#F0509C;">Beating heart organoid</span>
+          <div style="position:relative; display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 22px;">
+            <span style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:Unbounded, sans-serif; font-weight:300; font-size:40px; letter-spacing:-0.03em;">0.83</span><span style="font-size:13px; color:#C9D6D4;">Hz simulated</span></span>
+            <span style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:Unbounded, sans-serif; font-weight:300; font-size:40px; letter-spacing:-0.03em; color:#C9D6D4;">0.85</span><span style="font-size:13px; color:#8FA0A0;">Hz observed</span></span>
+          </div>
+          <p style="position:relative; margin:0; font-size:14px; line-height:1.55; color:#C9D6D4;">30,000 virtual cells. It also predicted the heart stops when calcium is removed — a case never seen in training.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:18px; align-items:stretch;">
+      <div data-reveal="" data-glow="" style="position:relative; flex:1 1 100%; min-width:0; padding:clamp(24px,2.6vw,36px); border-radius:32px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:18px; transition:transform .35s, border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(240,80,156,0.4);">
+        <div aria-hidden="true" style="position:absolute; right:-60px; top:-60px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle, rgba(240,80,156,0.38), rgba(240,80,156,0) 65%); filter:blur(8px);"></div>
+        <div style="position:relative; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px 48px;">
+          <div style="flex:1 1 480px; min-width:0; display:flex; flex-direction:column; gap:16px;">
+            <span style="position:relative; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#F0509C;">Treatment rescue · virtual surgery</span>
+            <h3 style="margin:0; font-weight:200; font-size:clamp(26px,2.6vw,38px); line-height:1.15; letter-spacing:-0.03em; text-wrap:balance;">For a patient whose treatment failed, Ymir found a regimen that shrank the virtual tumor, and surgery shrank it further.</h3>
+            <span style="font-size:12px; color:#8FA0A0;">Simulated, retrospective proof of concept.</span>
+          </div>
+          <div style="flex:0 1 auto; display:flex; flex-direction:column; gap:16px; align-items:flex-start;">
+            <a href="evidence.html#surgery" style="display:flex; align-items:center; gap:10px; height:46px; padding:0 18px; border-radius:999px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); box-shadow:inset 0 1px 0 rgba(255,255,255,0.16); color:#fff; font-size:14px; transition:background .25s;" style-hover="background:rgba(255,255,255,0.12); color:#fff;">See the full evidence<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team" data-screen-label="Team" style="position:relative; padding:0 0 clamp(64px,8vw,120px);">
+  <div style="position:relative; max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px); display:flex; flex-direction:column; gap:clamp(28px,3.5vw,44px);">
+    <div data-reveal-stagger="" style="display:flex; flex-direction:column; gap:18px;">
+      <span style="font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:#C8F169;">Team</span>
+      <h2 style="margin:0; font-weight:200; font-size:clamp(38px,4.6vw,68px); line-height:1.04; letter-spacing:-0.045em; text-wrap:balance;">The people behind Ymir.</h2>
+    </div>
+    <div data-reveal-stagger="" data-step="100" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,240px),1fr)); gap:18px;">
+        <div data-glow="" style="position:relative; min-width:0; padding:24px; border-radius:28px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:14px; transition:transform .35s, border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(255,255,255,0.28);">
+          <div style="width:72px; height:72px; border-radius:50%; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 6px, rgba(255,255,255,0) 6px 12px), #0a1414; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:11px; color:#8FA0A0;">[Photo]</div>
+          <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:18px; font-weight:400;">[Name]</span><span style="font-size:13px; color:#C8F169;">[Role]</span></div>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:#C9D6D4;">[One-line background]</p>
+        </div>
+        <div data-glow="" style="position:relative; min-width:0; padding:24px; border-radius:28px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:14px; transition:transform .35s, border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(255,255,255,0.28);">
+          <div style="width:72px; height:72px; border-radius:50%; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 6px, rgba(255,255,255,0) 6px 12px), #0a1414; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:11px; color:#8FA0A0;">[Photo]</div>
+          <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:18px; font-weight:400;">[Name]</span><span style="font-size:13px; color:#C8F169;">[Role]</span></div>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:#C9D6D4;">[One-line background]</p>
+        </div>
+        <div data-glow="" style="position:relative; min-width:0; padding:24px; border-radius:28px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:14px; transition:transform .35s, border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(255,255,255,0.28);">
+          <div style="width:72px; height:72px; border-radius:50%; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 6px, rgba(255,255,255,0) 6px 12px), #0a1414; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:11px; color:#8FA0A0;">[Photo]</div>
+          <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:18px; font-weight:400;">[Name]</span><span style="font-size:13px; color:#C8F169;">[Role]</span></div>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:#C9D6D4;">[One-line background]</p>
+        </div>
+        <div data-glow="" style="position:relative; min-width:0; padding:24px; border-radius:28px; overflow:hidden; background:linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)), rgba(14,30,28,0.5); backdrop-filter:blur(26px) saturate(150%); -webkit-backdrop-filter:blur(26px) saturate(150%); border:1px solid rgba(255,255,255,0.1); box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 30px 70px -20px rgba(0,0,0,0.7); display:flex; flex-direction:column; gap:14px; transition:transform .35s, border-color .35s;" style-hover="transform:translateY(-4px); border-color:rgba(255,255,255,0.28);">
+          <div style="width:72px; height:72px; border-radius:50%; background:repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 6px, rgba(255,255,255,0) 6px 12px), #0a1414; border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:11px; color:#8FA0A0;">[Photo]</div>
+          <div style="display:flex; flex-direction:column; gap:4px;"><span style="font-size:18px; font-weight:400;">[Name]</span><span style="font-size:13px; color:#C8F169;">[Role]</span></div>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:#C9D6D4;">[One-line background]</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section id="partners" data-screen-label="Contact" style="position:relative; padding:0 0 clamp(64px,8vw,120px);">
+  <div style="position:relative; max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px);">
+    <div aria-hidden="true" data-parallax="0.12" style="position:absolute; left:6%; top:-60px; width:520px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(47,209,138,0.5), rgba(47,209,138,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+    <div aria-hidden="true" data-parallax="-0.18" style="position:absolute; left:40%; bottom:-80px; width:520px; height:420px; border-radius:50%; background:radial-gradient(circle, rgba(31,181,214,0.45), rgba(31,181,214,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+    <div aria-hidden="true" data-parallax="0.16" style="position:absolute; right:4%; top:-40px; width:520px; height:460px; border-radius:50%; background:radial-gradient(circle, rgba(214,58,143,0.5), rgba(214,58,143,0) 65%); filter:blur(30px); pointer-events:none;"></div>
+    <div data-reveal="" data-glow="" style="position:relative; padding:clamp(32px,5vw,72px); border-radius:40px; background:linear-gradient(120deg, rgba(47,209,138,0.16), rgba(31,181,214,0.08) 45%, rgba(214,58,143,0.16)), rgba(10,22,21,0.55); backdrop-filter:blur(34px) saturate(160%); -webkit-backdrop-filter:blur(34px) saturate(160%); border:1px solid rgba(255,255,255,0.14); box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -40px 80px rgba(0,0,0,0.2), 0 60px 140px -40px rgba(0,0,0,0.85); display:flex; flex-direction:column; gap:36px;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:20px;">
+        <h2 style="flex:1 1 520px; min-width:0; margin:0; font-weight:200; font-size:clamp(36px,4.4vw,64px); line-height:1.05; letter-spacing:-0.045em; text-wrap:balance;">Run your next experiment on a twin.</h2>
+        <p style="flex:0 1 380px; margin:0; font-size:16px; line-height:1.6; color:#E1EAE9; font-weight:300;">We're seeking pharma partners and seed investors.</p>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; padding:14px 20px; border-radius:24px; background:rgba(5,9,9,0.4); border:1px solid rgba(255,255,255,0.12); font-size:14px; line-height:1.5; color:#E1EAE9;"><span style="font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:#C8F169;">What’s next</span><span>An AI treatment planner (reinforcement learning) that picks treatment order and timing automatically.</span></div>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ onSubmit }}" style="display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end;">
+          <label style="flex:1 1 200px; min-width:0; display:flex; flex-direction:column; gap:8px; font-size:13px; color:#E1EAE9;">Name<input required="" name="name" autocomplete="name" placeholder="Jane Doe" style="height:56px; padding:0 22px; border-radius:999px; background:rgba(5,9,9,0.45); border:1px solid rgba(255,255,255,0.16); color:#fff; font-family:Sora, sans-serif; font-size:15px; outline:none; transition:border-color .2s;" style-focus="border-color:#C8F169;"></label>
+          <label style="flex:1 1 240px; min-width:0; display:flex; flex-direction:column; gap:8px; font-size:13px; color:#E1EAE9;">Work email<input required="" type="email" name="email" autocomplete="email" placeholder="jane@company.com" style="height:56px; padding:0 22px; border-radius:999px; background:rgba(5,9,9,0.45); border:1px solid rgba(255,255,255,0.16); color:#fff; font-family:Sora, sans-serif; font-size:15px; outline:none; transition:border-color .2s;" style-focus="border-color:#C8F169;"></label>
+          <label style="flex:1 1 200px; min-width:0; display:flex; flex-direction:column; gap:8px; font-size:13px; color:#E1EAE9;">I'm a…<select name="role" style="height:56px; padding:0 22px; border-radius:999px; background:rgba(5,9,9,0.45); border:1px solid rgba(255,255,255,0.16); color:#fff; font-family:Sora, sans-serif; font-size:15px; outline:none; appearance:none; -webkit-appearance:none; cursor:pointer;" style-focus="border-color:#C8F169;"><option>Drug developer</option><option>Clinical researcher</option><option>Investor</option><option>Other</option></select></label>
+          <button data-magnet="" type="submit" style="flex:none; display:flex; align-items:center; gap:14px; height:56px; padding:0 7px 0 26px; border:none; border-radius:999px; background:#fff; color:#050909; font-size:15px; font-weight:500; cursor:pointer; transition:transform .25s, box-shadow .25s;" style-hover="transform:translateY(-2px); box-shadow:0 14px 44px rgba(255,255,255,0.25);">Request a demo<span style="width:42px; height:42px; border-radius:50%; background:#050909; display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
+        </form>
+      </sc-if>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="display:flex; align-items:center; gap:14px; padding:18px 24px; border-radius:999px; background:rgba(5,9,9,0.45); border:1px solid rgba(200,241,105,0.4); font-size:16px;"><span style="width:10px; height:10px; border-radius:50%; background:#C8F169; box-shadow:0 0 12px #C8F169;"></span>Thank you. We'll be in touch at your work email.</div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid rgba(255,255,255,0.07);">
+  <div style="max-width:1440px; margin:0 auto; padding:40px clamp(20px,4.5vw,64px) 48px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:24px; font-size:13px; line-height:1.6; color:#8FA0A0;">
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <span style="display:flex; align-items:center; gap:10px; color:#fff;"><svg width="22" height="22" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.2"></circle><circle cx="11" cy="12" r="3.4" fill="#F0509C"></circle><circle cx="19.5" cy="13" r="2.7" fill="#4FD6F5"></circle><circle cx="14" cy="20" r="2.9" fill="#3FD68C"></circle></svg><span style="font-family:Unbounded, sans-serif; font-size:12px; letter-spacing:0.34em;">YMIR</span></span>
+      <span>© 2026 Ymir · [Company legal name] · Houston, Texas</span>
+      <span>Supported by the NIH (award R35GM150460).</span>
+    </div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;autoplay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Simulator&quot;},&quot;startState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;day0&quot;,&quot;day180&quot;,&quot;untreated540&quot;,&quot;treated540&quot;],&quot;default&quot;:&quot;day0&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Simulator&quot;},&quot;showGrain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Texture&quot;}}">
+class Component extends DCLogic {
+  state = { day: 0, branch: 'none', wide: true, sent: false, playing: false, cardiac: 0, pt: 0, ptN: 0, wound: 0 };
+  canvasRef = React.createRef();
+  pipeRef = React.createRef();
+  timers = [];
+
+  keyFor(d, b) { return d === 0 ? 's0' : d === 180 ? 's180' : (b === 'immuno' ? 't540' : 'u540'); }
+
+  componentDidMount() {
+    this.onResize = () => { const w = window.innerWidth >= 860; if (w !== this.state.wide) this.setState({ wide: w }); };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+    const map = { day0: [0, 'none'], day180: [180, 'none'], untreated540: [540, 'none'], treated540: [540, 'immuno'] };
+    const [d, b] = map[this.props.startState] || map.day0;
+    this.setState({ day: d, branch: b });
+    this.initSim(this.keyFor(d, b));
+    this.raf = requestAnimationFrame(this.loop);
+    if (this.props.autoplay ?? true) this.timers.push(setTimeout(() => this.play(), 1400));
+    this.setupFx();
+    this._live = true;
+  }
+  // Editor hot-reload guard: if the logic class was swapped without a fresh mount,
+  // the old cleanup has removed listeners and stopped the animation loop. Re-attach
+  // only what is safe to re-run (scroll effects, resize, simulator loop), not the reveal animations.
+  resume() {
+    this._live = true;
+    if (this.onResize) { window.removeEventListener('resize', this.onResize); window.addEventListener('resize', this.onResize); }
+    if (!this.P) this.initSim(this.keyFor(this.state.day, this.state.branch));
+    cancelAnimationFrame(this.raf);
+    this.raf = requestAnimationFrame(this.loop);
+    this.setupScroll();
+  }
+  componentDidUpdate() {
+    if (!this._live) this.resume();
+    const k = this.keyFor(this.state.day, this.state.branch);
+    if (this.P && k !== this.simKey) this.applyState(k, false);
+  }
+  componentWillUnmount() {
+    this._live = false;
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('resize', this.onResize);
+    this.stop();
+    if (this.fxCleanup) this.fxCleanup();
+  }
+
+  setupFx() {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ease = 'cubic-bezier(.2,.7,.2,1)';
+    const offs = [];
+    const on = (el, ev, fn, o) => { el.addEventListener(ev, fn, o); offs.push(() => el.removeEventListener(ev, fn, o)); };
+    const $$ = q => Array.from(document.querySelectorAll(q));
+    const fmt = (v, dec, suf) => (dec ? v.toFixed(dec) : Math.round(v).toLocaleString('en-US')) + suf;
+    const countUp = el => {
+      const to = parseFloat(el.dataset.count), dec = +(el.dataset.dec || 0), suf = el.dataset.suffix || '', node = el.firstChild;
+      if (!node || reduce) return;
+      const t0 = performance.now(), dur = 1500;
+      const step = now => { const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3); node.nodeValue = fmt(to * e, dec, suf); if (k < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    };
+    const counts = $$('[data-count]');
+    if (!reduce) counts.forEach(el => { if (el.firstChild) el.firstChild.nodeValue = fmt(0, +(el.dataset.dec || 0), el.dataset.suffix || ''); });
+    const prep = (el, delay, pop) => {
+      el._o = { op: el.style.opacity, tf: el.style.transform, tr: el.style.transition };
+      el.style.opacity = '0';
+      el.style.transform = pop ? 'scale(0.3)' : 'translateY(36px)';
+      el.style.transition = 'opacity 1s ' + ease + ' ' + delay + 'ms, transform 1s ' + ease + ' ' + delay + 'ms';
+      el._d = delay;
+    };
+    const show = el => {
+      if (!el._o) return;
+      el.style.opacity = '1'; el.style.transform = 'none';
+      const o = el._o; el._o = null;
+      setTimeout(() => { el.style.transition = o.tr; el.style.transform = o.tf; el.style.opacity = o.op; }, 1100 + (el._d || 0));
+    };
+    const targets = [];
+    if (!reduce) {
+      $$('[data-reveal]').forEach(el => { prep(el, +(el.dataset.delay || 0)); targets.push(el); });
+      $$('[data-reveal-stagger]').forEach(el => {
+        const base = +(el.dataset.delay || 0), stepMs = +(el.dataset.step || 90), pop = el.hasAttribute('data-pop');
+        Array.from(el.children).forEach((c, i) => prep(c, base + i * stepMs, pop));
+        targets.push(el);
+      });
+    }
+    const io = new IntersectionObserver(entries => entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target; io.unobserve(el);
+      if (el.hasAttribute('data-reveal-stagger')) Array.from(el.children).forEach(show); else show(el);
+      el.querySelectorAll && el.querySelectorAll('[data-count]').forEach(countUp);
+      if (el.dataset.count) countUp(el);
+    }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    targets.forEach(el => io.observe(el));
+    const counted = new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { counted.unobserve(en.target); if (!en.target.closest('[data-reveal],[data-reveal-stagger]')) countUp(en.target); } }), { threshold: 0.4 });
+    counts.forEach(el => counted.observe(el));
+
+    this.setupScroll();
+
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (fine) {
+      $$('[data-glow]').forEach(el => {
+        if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+        const o = document.createElement('div');
+        o.setAttribute('aria-hidden', 'true');
+        o.style.cssText = 'position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .45s;z-index:4;mix-blend-mode:screen;background:radial-gradient(460px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.09), transparent 45%);';
+        const ring = document.createElement('div');
+        ring.style.cssText = 'position:absolute;inset:0;border-radius:inherit;padding:1px;background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.75), transparent 65%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;';
+        o.appendChild(ring); el.appendChild(o);
+        on(el, 'pointermove', e => { const r = el.getBoundingClientRect(); el.style.setProperty('--mx', (e.clientX - r.left) + 'px'); el.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+        on(el, 'pointerenter', () => { o.style.opacity = '1'; });
+        on(el, 'pointerleave', () => { o.style.opacity = '0'; });
+      });
+      $$('[data-tilt]').forEach(el => {
+        on(el, 'pointermove', e => {
+          if (el._o) return;
+          const r = el.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transform = 'perspective(900px) rotateX(' + (-py * 9).toFixed(2) + 'deg) rotateY(' + (px * 11).toFixed(2) + 'deg) translateY(-8px)';
+        });
+        on(el, 'pointerleave', () => { if (!el._o) el.style.transform = ''; });
+      });
+      $$('[data-magnet]').forEach(el => {
+        el.style.transition = (el.style.transition ? el.style.transition + ', ' : '') + 'translate .4s ' + ease;
+        on(el, 'pointermove', e => { const r = el.getBoundingClientRect(); el.style.translate = ((e.clientX - r.left - r.width / 2) * 0.22).toFixed(1) + 'px ' + ((e.clientY - r.top - r.height / 2) * 0.35).toFixed(1) + 'px'; });
+        on(el, 'pointerleave', () => { el.style.translate = '0 0'; });
+      });
+    }
+    const vio = new IntersectionObserver(entries => entries.forEach(en => {
+      en.target.querySelectorAll('video').forEach(v => { if (en.isIntersecting && !reduce) { v.muted = true; v.playsInline = true; const p = v.play(); if (p && p.catch) p.catch(() => {}); } else v.pause(); });
+    }), { threshold: 0.35 });
+    $$('[data-video]').forEach(el => vio.observe(el));
+    this.fxCleanup = () => { offs.forEach(f => f()); io.disconnect(); counted.disconnect(); vio.disconnect(); if (this.scrollCleanup) this.scrollCleanup(); };
+  }
+
+  // Scroll-linked effects (horizontal card pipeline, progress bar, header, parallax).
+  // Kept separate so they can be re-attached safely without re-running the one-time reveal animations.
+  setupScroll() {
+    if (this.scrollCleanup) this.scrollCleanup();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const offs = [];
+    const on = (el, ev, fn, o) => { el.addEventListener(ev, fn, o); offs.push(() => el.removeEventListener(ev, fn, o)); };
+    const $$ = q => Array.from(document.querySelectorAll(q));
+    const hwrap = document.querySelector('[data-hscroll]'), pipe = this.pipeRef.current;
+    const layoutH = () => {
+      if (!hwrap || !pipe || reduce) return;
+      hwrap.style.height = '';
+      const dist = pipe.scrollWidth - pipe.clientWidth, h = pipe.offsetHeight;
+      hwrap._dist = dist > 4 ? dist : 0;
+      hwrap.style.height = hwrap._dist ? (h + dist * 1.6) + 'px' : '';
+      pipe.style.top = Math.max(84, (window.innerHeight - h) / 2) + 'px';
+    };
+    layoutH();
+    setTimeout(layoutH, 1200);
+    on(window, 'resize', layoutH);
+    const prog = document.querySelector('[data-progress]'), header = document.querySelector('[data-header]'), inner = document.querySelector('[data-header-inner]');
+    const par = reduce ? [] : $$('[data-parallax]');
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return; ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight, vh = window.innerHeight;
+        if (hwrap && hwrap._dist) {
+          const r = hwrap.getBoundingClientRect(), range = hwrap.offsetHeight - pipe.offsetHeight;
+          const p = Math.min(1, Math.max(0, (parseFloat(pipe.style.top) - r.top) / range));
+          pipe.scrollLeft = p * hwrap._dist;
+        }
+        if (prog) prog.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0) + ')';
+        const compact = y > 40;
+        if (inner) inner.style.height = compact ? '60px' : '72px';
+        if (header) header.style.background = compact ? 'rgba(5,9,9,0.74)' : 'rgba(5,9,9,0.55)';
+        par.forEach(el => {
+          const r = el.parentElement.getBoundingClientRect();
+          if (r.bottom < -400 || r.top > vh + 400) return;
+          el.style.translate = '0 ' + ((r.top + r.height / 2 - vh / 2) * parseFloat(el.dataset.parallax)).toFixed(1) + 'px';
+        });
+      });
+    };
+    on(window, 'scroll', onScroll, { passive: true });
+    on(window, 'resize', onScroll);
+    onScroll();
+    this.scrollCleanup = () => { offs.forEach(f => f()); this.scrollCleanup = null; };
+  }
+  videoVals(pill) {
+    const V = 'https://guangyuwanglab2021.github.io/ymir-showcase/';
+    const { cardiac, wound, pt, ptN } = this.state;
+    const W = [['Normal', 'normal-wound-healing', 'Normal condition · Video S2'], ['Diabetic', 'diabetic-pdgf', 'Diabetic condition · Video S3']][wound];
+    const R = ['z110-response', 'z137-response', 'z111-response'], NR = ['z44-nonresponse', 'z181-nonresponse', 'z194-nonresponse'];
+    const file = pt === 0 ? 'z56-resection-180days' : (pt === 1 ? R : NR)[ptN];
+    const caption = pt === 0 ? 'Surgery · Video S5' : (pt === 1 ? 'Responder' : 'Non-responder') + ' ' + (ptN + 1) + ' of 3 · Video S6';
+    return {
+      c1L: cardiac === 0 ? 'Experiment video' : 'Normal Ca²⁺', c1R: cardiac === 0 ? 'Cardiac organoid simulation' : 'Ca²⁺ withdrawal',
+      c2Src: V + 'media/case2/' + W[1] + '.mp4', c2Poster: V + 'posters/case2-' + W[1] + '.jpg', c2Caption: W[2],
+      woundTabs: ['Normal', 'Diabetic'].map((label, i) => ({ label, on: wound === i, ...pill(wound === i), onClick: () => this.setState({ wound: i }) })),
+      ptSrc: V + 'media/case4/' + file + '.mp4', ptPoster: V + 'posters/case4-' + file + '.jpg', ptLabel: caption, ptCaption: caption,
+      ptTabs: ['Surgery', 'Responders', 'Non-responders'].map((label, i) => ({ label, on: pt === i, ...pill(pt === i), onClick: () => this.setState({ pt: i }) })),
+      ptPick: pt !== 0,
+      ptNums: [0, 1, 2].map(i => ({ label: 'Patient ' + (i + 1), on: ptN === i, ...pill(ptN === i), onClick: () => this.setState({ ptN: i }) }))
+    };
+  }
+  stop() { this.timers.forEach(clearTimeout); this.timers = []; if (this.state.playing) this.setState({ playing: false }); }
+  play = () => {
+    this.stop();
+    this.setState({ day: 0, branch: 'none', playing: true });
+    const q = [[1800, { day: 180 }], [3800, { day: 540 }], [6800, { branch: 'immuno' }], [7000, { playing: false }]];
+    q.forEach(([t, s]) => this.timers.push(setTimeout(() => this.setState(s), t)));
+  };
+  setDay(d) { this.stop(); this.setState({ day: d, playing: false }); }
+  setTx(b) { this.stop(); this.setState({ branch: b, day: 540, playing: false }); }
+
+  initSim(key) {
+    let seed = 42;
+    const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    const P = [];
+    const mk = (k, i, fx, fy) => {
+      const p = { k, i, a: rnd() * 6.2832, u: rnd(), u2: rnd(), fx: fx ?? (rnd() - 0.5) * 1.3, fy: fy ?? (rnd() - 0.5) * 1.04, o: rnd() * 3.1416, ph: rnd() * 6.2832, jx: (rnd() - 0.5) * 0.006, jy: (rnd() - 0.5) * 0.006, al: 0, ta: 0, m: 0, tm: 0, to: 0, ang: 0 };
+      p.x = p.tx = p.fx; p.y = p.ty = p.fy; p.ang = p.to = p.o; P.push(p);
+    };
+    const blob = (x, y) => Math.hypot(x, y) * (1 + 0.16 * Math.sin(3 * Math.atan2(y, x) + 1));
+    const rings = [], sp = 0.118;
+    for (let row = -5; row <= 5; row++) for (let col = -7; col <= 7; col++) {
+      const cx = col * sp + (row & 1 ? sp / 2 : 0) + (rnd() - 0.5) * 0.03, cy = row * sp * 0.866 + (rnd() - 0.5) * 0.03;
+      if (Math.abs(cx) > 0.72 || Math.abs(cy) > 0.56) continue;
+      rings.push({ cx, cy, r: 0.04 + 0.012 * rnd(), d: blob(cx, cy) });
+    }
+    rings.sort((p, q) => p.d - q.d);
+    const walls = [];
+    rings.forEach(g => { const n = 12; for (let j = 0; j < n; j++) { const an = j / n * 6.2832 + rnd() * 0.25, x = g.cx + Math.cos(an) * g.r, y = g.cy + Math.sin(an) * g.r; walls.push({ x, y, d: blob(x, y) + rnd() * 0.015 }); } });
+    walls.sort((p, q) => p.d - q.d);
+    walls.forEach((w, i) => mk('L', i, w.x, w.y));
+    this.walls = walls; this.rings = rings;
+    for (let i = 0; i < 277; i++) mk('T', i);
+    for (let i = 0; i < 242; i++) mk('V', i);
+    for (let i = 0; i < 120; i++) mk('S', i);
+    for (let i = 0; i < 120; i++) mk('F', i);
+    for (let i = 0; i < 46; i++) mk('I', i);
+    for (let i = 0; i < 100; i++) mk('M', i);
+    this.P = P;
+    this.applyState(key, true);
+    this.Rc = this.Rt; this.tr = this.treated;
+    const spr = (rgb, core) => {
+      const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d');
+      const g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+      g.addColorStop(0, `rgba(255,255,255,${core})`); g.addColorStop(0.12, `rgba(${rgb},1)`); g.addColorStop(0.32, `rgba(${rgb},0.32)`); g.addColorStop(1, `rgba(${rgb},0)`);
+      x.fillStyle = g; x.fillRect(0, 0, 64, 64); return c;
+    };
+    this.spr = { T: spr('240,80,156', 0.9), V: spr('255,138,92', 0.9), I: spr('79,214,245', 0.9), M: spr('79,214,245', 0.9), F: spr('63,214,140', 0.7), L: spr('110,133,132', 0.25), S: spr('200,241,105', 0.8) };
+  }
+
+  applyState(key, snap) {
+    // off = wall slots taken by invasive-filled alveoli; hide = alveolar lining no longer intact
+    const C = {
+      s0: { lep: 111, off: 0, inv: 0, tc: 40, touch: 0, m1: 6, m2: 10, fb: 40, cap: 0, sig: 30, hide: 111, tr: 0 },
+      s180: { lep: 277, off: 0, inv: 0, tc: 46, touch: 4, m1: 6, m2: 25, fb: 60, cap: 22, sig: 50, hide: 277, tr: 0 },
+      u540: { lep: 264, off: 180, inv: 242, tc: 46, touch: 12, m1: 0, m2: 93, fb: 120, cap: 120, sig: 66, hide: 444, tr: 0 },
+      t540: { lep: 47, off: 0, inv: 0, tc: 46, touch: 0, m1: 31, m2: 2, fb: 120, cap: 120, sig: 13, hide: 277, tr: 1 }
+    }[key];
+    const W = this.walls, wd = n => (W[Math.min(Math.max(n, 1), W.length) - 1]).d;
+    const R = wd(C.hide) + 0.03;
+    this.Rt = C.tr ? wd(C.lep) + 0.03 : R; this.simKey = key; this.treated = C.tr;
+    const polar = (a, r) => [Math.cos(a) * r, Math.sin(a) * r];
+    const away = (p, rmin) => { const d = Math.hypot(p.fx, p.fy) || 0.001; if (d >= rmin) return [p.fx, p.fy]; const k = (rmin + 0.02 + p.u * 0.06) / d; return [p.fx * k, p.fy * k]; };
+    for (const p of this.P) {
+      let vis = false, x = p.fx, y = p.fy, al = 1;
+      if (p.k === 'T') {
+        if (p.i < C.lep) { const w = W[C.off + p.i]; vis = true; al = 0.9; x = w.x + p.jx; y = w.y + p.jy; }
+      } else if (p.k === 'V') {
+        if (p.i < C.inv) { const g = this.rings[Math.floor(p.i / 16)], rr = g.r * 0.72 * Math.sqrt(p.u); vis = true; al = 0.9; x = g.cx + Math.cos(p.a) * rr; y = g.cy + Math.sin(p.a) * rr; }
+      } else if (p.k === 'I') {
+        if (p.i < C.tc) {
+          vis = true;
+          if (C.tr) [x, y] = polar(p.a, R * Math.sqrt(p.u));
+          else if (p.i < C.touch) { const w = W[C.off + C.lep - 1 - Math.floor(p.u * Math.min(60, C.lep))]; x = w.x + 0.009 * Math.cos(p.a); y = w.y + 0.009 * Math.sin(p.a); }
+          else [x, y] = away(p, R * 1.15);
+        }
+      } else if (p.k === 'M') {
+        if (p.i < C.m1 + C.m2) {
+          vis = true; p.tm = p.i < C.m1 ? 1 : 0;
+          [x, y] = polar(p.a, C.tr ? R * 0.95 * Math.sqrt(p.u) : key === 'u540' ? R * (0.92 + 0.3 * p.u) : R * (1.2 + 1.6 * p.u));
+        }
+      } else if (p.k === 'F') {
+        if (p.i < C.fb) {
+          vis = true; al = 0.9;
+          if (p.i < C.cap) {
+            if (C.tr) { [x, y] = polar(p.a, R * (0.2 + 0.8 * Math.sqrt(p.u))); p.to = p.o; }
+            else { [x, y] = polar(p.a, R * (1.0 + 0.22 * p.u)); p.to = p.a + Math.PI / 2; }
+          } else { [x, y] = away(p, R * 1.2); p.to = p.o; }
+        }
+      } else if (p.k === 'S') {
+        if (p.i < C.sig) { vis = true; al = 0.75; [x, y] = polar(p.a, R * (0.3 + 1.1 * p.u)); }
+      } else if (p.k === 'L') {
+        vis = p.i >= C.hide; al = 0.55;
+      }
+      p.ta = vis ? al : 0;
+      if (vis) { p.tx = x; p.ty = y; }
+      if (snap) { p.x = p.tx; p.y = p.ty; p.al = p.ta; p.m = p.tm; p.ang = p.to; }
+    }
+  }
+
+  loop = (t) => {
+    this.raf = requestAnimationFrame(this.loop);
+    const cv = this.canvasRef.current; if (!cv || !this.P) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), w = cv.clientWidth, h = cv.clientHeight;
+    if (!w || !h) return;
+    if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+    const ctx = cv.getContext('2d'), W = cv.width, H = cv.height, S = Math.min(W, H), cx = W / 2, cy = H / 2, k = S / 520, ts = t * 0.001;
+    this.Rc += (this.Rt - this.Rc) * 0.035; this.tr += (this.treated - this.tr) * 0.03;
+    ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+    ctx.fillStyle = '#030808'; ctx.fillRect(0, 0, W, H);
+    let g = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.hypot(W, H) * 0.55);
+    g.addColorStop(0, 'rgba(16,40,37,0.9)'); g.addColorStop(1, 'rgba(3,8,8,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(201,214,212,0.07)'; ctx.lineWidth = dpr;
+    ctx.beginPath(); ctx.arc(cx, cy, S * 0.47, 0, 6.2832); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - 10 * dpr, cy); ctx.lineTo(cx + 10 * dpr, cy); ctx.moveTo(cx, cy - 10 * dpr); ctx.lineTo(cx, cy + 10 * dpr); ctx.stroke();
+    ctx.globalCompositeOperation = 'lighter';
+    const hr = Math.max(this.Rc * S * 1.5, 1);
+    g = ctx.createRadialGradient(cx, cy, 0, cx, cy, hr); g.addColorStop(0, `rgba(240,80,156,${0.2 * (1 - this.tr * 0.7)})`); g.addColorStop(1, 'rgba(240,80,156,0)');
+    ctx.fillStyle = g; ctx.fillRect(cx - hr, cy - hr, hr * 2, hr * 2);
+    if (this.tr > 0.01) { const r2 = S * 0.34; g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r2); g.addColorStop(0, `rgba(79,214,245,${0.16 * this.tr})`); g.addColorStop(1, 'rgba(79,214,245,0)'); ctx.fillStyle = g; ctx.fillRect(cx - r2, cy - r2, r2 * 2, r2 * 2); }
+    const JIT = { V: 0.9, T: 0.7, I: 1.4, M: 1.1, F: 0.6, L: 0.3, S: 3.2 }, SZ = { V: 2.5, T: 2.3, I: 1.9, M: 3.9, F: 2.2, L: 1.7, S: 1.1 };
+    for (const p of this.P) {
+      p.x += (p.tx - p.x) * 0.035; p.y += (p.ty - p.y) * 0.035; p.al += (p.ta - p.al) * 0.04; p.m += (p.tm - p.m) * 0.03; p.ang += (p.to - p.ang) * 0.04;
+      if ((p.k === 'T' || p.k === 'V') && p.ta > 0 && p.al < 0.02) { p.x = p.tx; p.y = p.ty; }
+      if (p.al < 0.01) continue;
+      const jm = JIT[p.k] * (p.k === 'I' ? 1 + 1.8 * this.tr : 1) * k;
+      const px = cx + p.x * S + Math.sin(ts * (0.6 + p.u) + p.ph) * jm, py = cy + p.y * S + Math.cos(ts * (0.5 + p.u2) + p.ph * 1.3) * jm;
+      const d = SZ[p.k] * 7 * k, sp = this.spr[p.k];
+      if (p.k === 'M') {
+        if (p.m > 0.01) { ctx.globalAlpha = p.al * p.m; ctx.drawImage(sp, px - d / 2, py - d / 2, d, d); }
+        if (p.m < 0.99) {
+          ctx.globalAlpha = p.al * (1 - p.m) * 0.9; ctx.strokeStyle = '#4FD6F5'; ctx.lineWidth = 1.3 * k;
+          ctx.beginPath(); ctx.arc(px, py, SZ.M * k, 0, 6.2832); ctx.stroke();
+          ctx.globalAlpha = p.al * (1 - p.m) * 0.25; ctx.drawImage(sp, px - d / 2, py - d / 2, d, d);
+        }
+      } else if (p.k === 'F') {
+        ctx.globalAlpha = p.al; ctx.save(); ctx.translate(px, py); ctx.rotate(p.ang);
+        ctx.drawImage(sp, -d, -d * 0.18, d * 2, d * 0.36); ctx.restore();
+      } else { ctx.globalAlpha = p.al; ctx.drawImage(sp, px - d / 2, py - d / 2, d, d); }
+    }
+    ctx.globalAlpha = 1;
+  };
+
+  renderVals() {
+    const { day, branch, wide, sent, playing } = this.state;
+    const key = this.keyFor(day, branch);
+    const MAG = '#F0509C', CY = '#4FD6F5', LI = '#C8F169';
+    const D = {
+      s0: { count: '666', label: 'Baseline twin', why: [[MAG, 'Built from a spatial gene-expression map of a real patient\'s tumor.'], [CY, '666 tumor cells among 13 cell types, each following real biological rules.']] },
+      s180: { count: '1,662', label: 'Treatment decision point', why: [[MAG, 'The tumor grows to 1,662 cells in 180 days.'], [LI, 'Treatment starts here. The twin forks into two futures.']] },
+      u540: { count: '3,033', label: 'Untreated', why: [[MAG, 'Suppressive M2 macrophages pile up: 558 cells.'], [LI, 'TGF-β rises 2.2×.'], ['#FF8A5C', 'Invasive tumor cells reach 1,454.']] },
+      t540: { count: '279', label: 'Combination immunotherapy · ~91% fewer', why: [[CY, 'Macrophages switch to attack mode: 184 M1 vs 11 M2.'], [CY, 'The PD-L1 brake on T cells is released.'], [LI, 'TGF-β falls 74%, but scar tissue (ECM) keeps building.']] }
+    }[key];
+    const good = key === 't540';
+    const pill = on => ({ bg: on ? '#fff' : 'transparent', fg: on ? '#050909' : '#C9D6D4' });
+    return {
+      wide, showGrain: this.props.showGrain ?? true,
+      canvasRef: this.canvasRef, pipeRef: this.pipeRef,
+      day, count: D.count, stateLabel: D.label,
+      countColor: good ? CY : MAG,
+      countGlow: good ? '0 0 22px rgba(79,214,245,0.75)' : '0 0 22px rgba(240,80,156,0.75)',
+      why: D.why.map(([c, t]) => ({ c, t })),
+      days: [0, 180, 540].map(d => ({ label: String(d), on: d === day, ...pill(d === day), onClick: () => this.setDay(d) })),
+      txHint: day !== 540,
+      txs: [['none', 'Untreated'], ['immuno', 'Immunotherapy']].map(([v, l]) => { const on = day === 540 && v === branch; return { label: l, on, ...pill(on), onClick: () => this.setTx(v) }; }),
+      play: this.play, playLabel: playing ? 'Playing…' : 'Play both futures',
+      pct: `${(day / 540) * 100}%`,
+      fillColor: day === 540 ? (good ? CY : MAG) : '#C9D6D4',
+      matched: Array.from({ length: 18 }, (_, i) => i), missed: Array.from({ length: 4 }, (_, i) => i),
+      cardiacA: this.state.cardiac === 0, cardiacB: this.state.cardiac === 1,
+      cardiacTabs: ['Experiment vs simulation', 'Ca²⁺ withdrawal'].map((label, i) => ({ label, on: this.state.cardiac === i, ...pill(this.state.cardiac === i), onClick: () => this.setState({ cardiac: i }) })),
+      ...this.videoVals(pill),
+      sent, notSent: !sent,
+      onSubmit: e => { e.preventDefault(); this.setState({ sent: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

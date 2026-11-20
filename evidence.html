@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Ymir · Evidence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;500&amp;family=Unbounded:wght@300;400&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:#050909}
+body{margin:0;background:#050909;color:#fff;-webkit-font-smoothing:antialiased}
+a{color:#C8F169;text-decoration:none}
+a:hover{color:#fff}
+</style>
+</helmet>
+<div style="min-height:100vh; background:#050909; color:#fff; font-family:Sora, system-ui, sans-serif; font-variant-numeric:tabular-nums;">
+
+<header style="position:sticky; top:0; z-index:50; background:rgba(5,9,9,0.92); border-bottom:1px solid rgba(255,255,255,0.08);">
+  <div style="max-width:1440px; margin:0 auto; padding:0 clamp(20px,4.5vw,64px); height:68px; display:flex; align-items:center; justify-content:space-between; gap:24px;">
+    <a href="index.html" aria-label="Ymir home" style="display:flex; align-items:center; gap:12px; color:#fff;">
+      <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1"></circle><circle cx="11" cy="12" r="3.4" fill="#F0509C"></circle><circle cx="19.5" cy="13" r="2.7" fill="#4FD6F5"></circle><circle cx="14" cy="20" r="2.9" fill="#3FD68C"></circle></svg>
+      <span style="font-family:Unbounded, sans-serif; font-size:14px; letter-spacing:0.34em;">YMIR</span>
+      <span style="font-size:13px; color:#8FA0A0; padding-left:12px; border-left:1px solid rgba(255,255,255,0.15);">Evidence</span>
+    </a>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Sections" style="display:flex; gap:2px;">
+        <a href="#clinical" style="color:#C9D6D4; font-size:13px; padding:12px 12px;" style-hover="color:#fff;">Clinical</a>
+        <a href="#lung" style="color:#C9D6D4; font-size:13px; padding:12px 12px;" style-hover="color:#fff;">Lung twin</a>
+        <a href="#surgery" style="color:#C9D6D4; font-size:13px; padding:12px 12px;" style-hover="color:#fff;">Surgery</a>
+        <a href="#realism" style="color:#C9D6D4; font-size:13px; padding:12px 12px;" style-hover="color:#fff;">Realism</a>
+        <a href="#heart" style="color:#C9D6D4; font-size:13px; padding:12px 12px;" style-hover="color:#fff;">Heart</a>
+        <a href="#wound" style="color:#C9D6D4; font-size:13px; padding:12px 12px;" style-hover="color:#fff;">Wound</a>
+        <a href="#methods" style="color:#C9D6D4; font-size:13px; padding:12px 12px;" style-hover="color:#fff;">Methods</a>
+      </nav>
+    </sc-if>
+    <a href="index.html#partners" style="display:flex; align-items:center; height:42px; padding:0 18px; border-radius:999px; background:#fff; color:#050909; font-size:14px; font-weight:500;" style-hover="color:#050909; background:#C8F169;">Request a demo</a>
+  </div>
+</header>
+
+<main style="max-width:1080px; margin:0 auto; padding:0 clamp(20px,4.5vw,48px);">
+
+<section id="summary" data-screen-label="Summary" style="padding:clamp(40px,6vw,80px) 0 48px; display:flex; flex-direction:column; gap:24px;">
+  <a href="index.html#results" style="align-self:flex-start; display:flex; align-items:center; gap:8px; font-size:14px; color:#C9D6D4; padding:10px 0;" style-hover="color:#fff;"><svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>Back to Ymir</a>
+  <h1 style="margin:0; font-weight:300; font-size:clamp(40px,5vw,64px); line-height:1.05; letter-spacing:-0.04em;">Evidence</h1>
+  <p style="margin:0; max-width:760px; font-size:19px; line-height:1.6; color:#E6EEED; font-weight:300; text-wrap:pretty;">Ymir matched the real immunotherapy response in 18 of 22 lung cancer patients, reproduced a beating heart organoid, predicted wound healing on mouse tissue it had never seen, and found a regimen that shrank a non-responder's virtual tumor.</p>
+  <div style="display:flex; flex-direction:column; border-top:1px solid rgba(255,255,255,0.12);">
+    <a href="#clinical" style="display:grid; grid-template-columns:40px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08); color:#fff; font-size:16px;" style-hover="color:#C8F169;"><span style="font-size:13px; color:#8FA0A0;">01</span>Immunotherapy response matched in 18 of 22 patients</a>
+    <a href="#lung" style="display:grid; grid-template-columns:40px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08); color:#fff; font-size:16px;" style-hover="color:#C8F169;"><span style="font-size:13px; color:#8FA0A0;">02</span>Lung tumor twin: what treatment fixes, and what it doesn't</a>
+    <a href="#surgery" style="display:grid; grid-template-columns:40px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08); color:#fff; font-size:16px;" style-hover="color:#C8F169;"><span style="font-size:13px; color:#8FA0A0;">03</span>Treatment rescue and virtual surgery</a>
+    <a href="#realism" style="display:grid; grid-template-columns:40px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08); color:#fff; font-size:16px;" style-hover="color:#C8F169;"><span style="font-size:13px; color:#8FA0A0;">04</span>Simulated lung tissue matches reference pathology</a>
+    <a href="#heart" style="display:grid; grid-template-columns:40px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08); color:#fff; font-size:16px;" style-hover="color:#C8F169;"><span style="font-size:13px; color:#8FA0A0;">05</span>Beating heart organoid</a>
+    <a href="#wound" style="display:grid; grid-template-columns:40px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08); color:#fff; font-size:16px;" style-hover="color:#C8F169;"><span style="font-size:13px; color:#8FA0A0;">06</span>Diabetic wound healing (mouse)</a>
+    <a href="#methods" style="display:grid; grid-template-columns:40px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.08); color:#fff; font-size:16px;" style-hover="color:#C8F169;"><span style="font-size:13px; color:#8FA0A0;">07</span>Atlas and methods</a>
+  </div>
+</section>
+
+<section id="clinical" data-screen-label="01 Clinical" style="padding:56px 0; border-top:1px solid rgba(255,255,255,0.14); display:flex; flex-direction:column; gap:24px;">
+  <span style="font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#4FD6F5;">01 · Clinical</span>
+  <h2 style="margin:0; font-weight:300; font-size:clamp(28px,3vw,40px); line-height:1.15; letter-spacing:-0.03em; text-wrap:balance;">Immunotherapy response matched in 18 of 22 patients</h2>
+  <p style="margin:0; max-width:760px; font-size:17px; line-height:1.6; color:#C9D6D4; text-wrap:pretty;">Using only biopsy slides and routine tests, with no per-patient tuning, Ymir matched the real treatment response in 18 of 22 lung cancer patients.</p>
+  <figure style="margin:0; display:flex; flex-direction:column; gap:10px;">
+    <a href="figures/fig-6c.jpg" target="_blank" rel="noopener" title="Open full size" style="display:block; border-radius:10px; overflow:hidden; background:#fff; border:1px solid rgba(255,255,255,0.12);"><img src="figures/fig-6c.jpg" alt="Figure 6C: simulated tumor trajectories for clinical responders and non-responders, responder vs non-responder comparison, and in-silico treatment optimization" loading="lazy" style="display:block; width:100%; height:auto;"></a>
+    <figcaption style="font-size:13px; color:#8FA0A0;">Figure 6C · Simulated vs real immunotherapy response (responders vs non-responders, P = 0.013), and in-silico optimization of a non-responder's treatment.</figcaption>
+  </figure>
+  <div style="display:flex; flex-direction:column;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Response matched</span><span style="font-weight:500;">18 / 22 (81.8%)</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Calls consistent across 3 tissue regions per patient</span><span style="font-weight:500;">22 / 22</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Responders vs non-responders</span><span style="font-weight:500;">P = 0.013 <span style="font-weight:300; color:#8FA0A0;">(Fig. 6C)</span></span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Cohort</span><span style="font-weight:500;">Retrospective, 22 patients, Houston Methodist</span></div>
+  </div>
+</section>
+
+<section id="lung" data-screen-label="02 Lung twin" style="padding:56px 0; border-top:1px solid rgba(255,255,255,0.14); display:flex; flex-direction:column; gap:24px;">
+  <span style="font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#F0509C;">02 · Lung tumor twin</span>
+  <h2 style="margin:0; font-weight:300; font-size:clamp(28px,3vw,40px); line-height:1.15; letter-spacing:-0.03em; text-wrap:balance;">What treatment fixes, and what it doesn't</h2>
+  <p style="margin:0; max-width:760px; font-size:17px; line-height:1.6; color:#C9D6D4; text-wrap:pretty;">In an unseen lung cancer patient, simulated combination immunotherapy from day 180 cut tumor cells by about 91% by day 540. Scar tissue (ECM) kept building, and VEGF blood-vessel signaling persisted.</p>
+  <figure style="margin:0; display:flex; flex-direction:column; gap:10px;">
+    <a href="figures/fig-5.jpg" target="_blank" rel="noopener" title="Open full size" style="display:block; border-radius:10px; overflow:hidden; background:#fff; border:1px solid rgba(255,255,255,0.12);"><img src="figures/fig-5.jpg" alt="Figure 5: lung tumor twin with and without combination immunotherapy, cell counts and cell–cell communication networks" loading="lazy" style="display:block; width:100%; height:auto;"></a>
+    <figcaption style="font-size:13px; color:#8FA0A0;">Figure 5 · Immune intervention suppresses tumor growth while ECM accumulation persists.</figcaption>
+  </figure>
+  <div style="display:flex; flex-direction:column;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Tumor cells, day 0 → 180</span><span style="font-weight:500;">666 → 1,662</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Tumor cells at day 540, untreated vs treated</span><span style="font-weight:500;">3,033 vs 279</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Invasive tumor cells, untreated, day 540</span><span style="font-weight:500;">1,454</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Macrophages, untreated: suppressive (M2) / attack (M1)</span><span style="font-weight:500;">558 / 0</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Macrophages, treated: attack (M1) / suppressive (M2)</span><span style="font-weight:500;">184 / 11</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">TGF-β, untreated / treated</span><span style="font-weight:500;">2.2× rise / 74% fall</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Signaling links engaging ≥10 cells, after treatment</span><span style="font-weight:500;">28 → 15</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Engaged cells, after treatment</span><span style="font-weight:500;">3,465 → 1,161</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">VEGF blood-vessel signaling, after treatment</span><span style="font-weight:500;">Persisted (560 cells)</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Directional agreement with a reference single-cell atlas (13 cell types, 540 days)</span><span style="font-weight:500;">79%</span></div>
+  </div>
+</section>
+
+<section id="surgery" data-screen-label="03 Rescue and surgery" style="padding:56px 0; border-top:1px solid rgba(255,255,255,0.14); display:flex; flex-direction:column; gap:24px;">
+  <span style="font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#FF8A5C;">03 · Treatment rescue and virtual surgery</span>
+  <h2 style="margin:0; font-weight:300; font-size:clamp(28px,3vw,40px); line-height:1.15; letter-spacing:-0.03em; text-wrap:balance;">A regimen that shrank a non-responder's virtual tumor</h2>
+  <p style="margin:0; max-width:760px; font-size:17px; line-height:1.6; color:#C9D6D4; text-wrap:pretty;">For a patient whose immunotherapy failed, Ymir tested another regimen from the cohort. The simulated tumor dropped below its starting size at day 180, and adding surgery reduced it further. Simulated, retrospective proof of concept.</p>
+  <figure style="margin:0; display:flex; flex-direction:column; gap:10px;">
+    <a href="figures/fig-6b.jpg" target="_blank" rel="noopener" title="Open full size" style="display:block; border-radius:10px; overflow:hidden; background:#fff; border:1px solid rgba(255,255,255,0.12);"><img src="figures/fig-6b.jpg" alt="Figure 6B: simulated surgical resection, defect filling and residual tumor regrowth over 360 days" loading="lazy" style="display:block; width:100%; height:auto;"></a>
+    <figcaption style="font-size:13px; color:#8FA0A0;">Figure 6B · Simulated resection: healing tissue fills the gap within 30 days; leftover tumor regrows by day 360. The treatment-rescue example is in Figure 6C (section 01).</figcaption>
+  </figure>
+  <div style="display:flex; flex-direction:column;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Tumor cells, before → after resection</span><span style="font-weight:500;">3,554 → 715</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Fibroblasts fill the resection gap</span><span style="font-weight:500;">Within 30 days</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Leftover tumor regrows</span><span style="font-weight:500;">By day 360</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Partial vs complete resection</span><span style="font-weight:500;">Tumor returned vs did not</span></div>
+  </div>
+</section>
+
+<section id="realism" data-screen-label="04 Realism" style="padding:56px 0; border-top:1px solid rgba(255,255,255,0.14); display:flex; flex-direction:column; gap:24px;">
+  <span style="font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#4FD6F5;">04 · Tissue realism</span>
+  <h2 style="margin:0; font-weight:300; font-size:clamp(28px,3vw,40px); line-height:1.15; letter-spacing:-0.03em; text-wrap:balance;">Simulated lung tissue matches reference pathology</h2>
+  <p style="margin:0; max-width:760px; font-size:17px; line-height:1.6; color:#C9D6D4; text-wrap:pretty;">Four tissue measures from the simulation, compared with reference values.</p>
+  <div style="display:flex; flex-direction:column;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr); gap:16px; padding:10px 0; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:#8FA0A0;"><span>Measure</span><span>Ymir</span><span>Reference</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Alveolar wall thickening</span><span style="font-weight:500;">2.09×</span><span>2.26×</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Tumor share</span><span style="font-weight:500;">53.2%</span><span>49.1%</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Fibroblasts</span><span style="font-weight:500;">19.0%</span><span>18.4%</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Air-space filling</span><span style="font-weight:500;">26%</span><span>30 ± 10%</span></div>
+  </div>
+</section>
+
+<section id="heart" data-screen-label="05 Heart" style="padding:56px 0; border-top:1px solid rgba(255,255,255,0.14); display:flex; flex-direction:column; gap:24px;">
+  <span style="font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#F0509C;">05 · Beating heart organoid</span>
+  <h2 style="margin:0; font-weight:300; font-size:clamp(28px,3vw,40px); line-height:1.15; letter-spacing:-0.03em; text-wrap:balance;">Beats at nearly the real rate</h2>
+  <p style="margin:0; max-width:760px; font-size:17px; line-height:1.6; color:#C9D6D4; text-wrap:pretty;">A 30,000-cell simulation beat at 0.83 Hz against 0.85 Hz observed, and predicted the heart stops when calcium is removed — a case never seen in training.</p>
+  <figure style="margin:0; display:flex; flex-direction:column; gap:10px;">
+    <a href="figures/fig-2.jpg" target="_blank" rel="noopener" title="Open full size" style="display:block; border-radius:10px; overflow:hidden; background:#fff; border:1px solid rgba(255,255,255,0.12);"><img src="figures/fig-2.jpg" alt="Figure 2: cardiac organoid mechanism chip, 3D model built from video, contraction waveform and calcium withdrawal" loading="lazy" style="display:block; width:100%; height:auto;"></a>
+    <figcaption style="font-size:13px; color:#8FA0A0;">Figure 2 · Cardiac organoid: simulation vs experiment, and response to calcium withdrawal.</figcaption>
+  </figure>
+  <div style="display:flex; flex-direction:column;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Beat frequency, simulated vs observed</span><span style="font-weight:500;">0.83 Hz vs 0.85 Hz</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Pixel correlation with the real image</span><span style="font-weight:500;">r = 0.96</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Virtual cells</span><span style="font-weight:500;">30,000</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Calcium withdrawal (not seen in training)</span><span style="font-weight:500;">Predicted the heart stops</span></div>
+  </div>
+</section>
+
+<section id="wound" data-screen-label="06 Wound" style="padding:56px 0; border-top:1px solid rgba(255,255,255,0.14); display:flex; flex-direction:column; gap:24px;">
+  <span style="font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#3FD68C;">06 · Diabetic wound · mouse</span>
+  <h2 style="margin:0; font-weight:300; font-size:clamp(28px,3vw,40px); line-height:1.15; letter-spacing:-0.03em; text-wrap:balance;">Simulated therapy improved every test section</h2>
+  <p style="margin:0; max-width:760px; font-size:17px; line-height:1.6; color:#C9D6D4; text-wrap:pretty;">On mouse tissue sections the model had never seen, simulated PDGF therapy raised the healing score from 0.21 to 0.98, and Ymir rebuilt a continuous tissue bridge across the wound.</p>
+  <figure style="margin:0; display:flex; flex-direction:column; gap:10px;">
+    <a href="figures/fig-3fh.jpg" target="_blank" rel="noopener" title="Open full size" style="display:block; border-radius:10px; overflow:hidden; background:#fff; border:1px solid rgba(255,255,255,0.12);"><img src="figures/fig-3fh.jpg" alt="Figure 3F–H: diabetic wound healing with and without simulated PDGF therapy, cell proportions, spatial fidelity and wound healing index" loading="lazy" style="display:block; width:100%; height:auto;"></a>
+    <figcaption style="font-size:13px; color:#8FA0A0;">Figure 3F–H · Diabetic wound healing with simulated PDGF therapy (mouse).</figcaption>
+  </figure>
+  <div style="display:flex; flex-direction:column;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Healing score with PDGF (1.0 = fully healed)</span><span style="font-weight:500;">0.21 → 0.98</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Both healing scores improved in every test section</span><span style="font-weight:500;">P = 0.006, P = 0.010</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Tissue bridge across the wound: Ymir vs stVCR and Moscot</span><span style="font-weight:500;">Continuous vs scattered or limited</span></div>
+  </div>
+</section>
+
+<section id="methods" data-screen-label="07 Methods" style="padding:56px 0; border-top:1px solid rgba(255,255,255,0.14); display:flex; flex-direction:column; gap:24px;">
+  <span style="font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:#C8F169;">07 · Atlas and methods</span>
+  <h2 style="margin:0; font-weight:300; font-size:clamp(28px,3vw,40px); line-height:1.15; letter-spacing:-0.03em; text-wrap:balance;">Built on checked biology</h2>
+  <p style="margin:0; max-width:760px; font-size:17px; line-height:1.6; color:#C9D6D4; text-wrap:pretty;">Every equation in Ymir's Atlas is checked against its source paper, and treatments follow clinical guidelines.</p>
+  <div style="display:flex; flex-direction:column;">
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Curated mathematical forms</span><span style="font-weight:500;">9,008 (5,625 distinct equations)</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Source papers, verified line by line</span><span style="font-weight:500;">1,237</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Tissue cases · cell types · biological processes</span><span style="font-weight:500;">109 · 610 · 10</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">“Strong” evidence rule</span><span style="font-weight:500;">Two independent papers, no shared authors</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Verification</span><span style="font-weight:500;">Independent reviewer checks each equation against its source page; blind audit with planted errors</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Transcriptomes behind the cell-state encoder</span><span style="font-weight:500;">28.5M</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Treatment classes</span><span style="font-weight:500;">11, following ASCO clinical practice recommendations</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Physics</span><span style="font-weight:500;">Tissue stiffness and pressure, which can block drugs and squeeze blood vessels</span></div>
+    <div style="display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; padding:12px 0; border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1); font-size:15px;"><span style="color:#C9D6D4;">Tissue models built</span><span style="font-weight:500;">3: heart, skin, lung</span></div>
+  </div>
+</section>
+
+<section data-screen-label="CTA" style="padding:56px 0 72px; border-top:1px solid rgba(255,255,255,0.14); display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px;">
+  <p style="margin:0; font-size:20px; font-weight:300;">Want the full manuscript or a demo?</p>
+  <a href="index.html#partners" style="display:flex; align-items:center; height:48px; padding:0 22px; border-radius:999px; background:#fff; color:#050909; font-size:15px; font-weight:500;" style-hover="color:#050909; background:#C8F169;">Request a demo</a>
+</section>
+
+</main>
+
+<footer style="border-top:1px solid rgba(255,255,255,0.08);">
+  <div style="max-width:1440px; margin:0 auto; padding:32px clamp(20px,4.5vw,64px) 40px; display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 24px; font-size:13px; line-height:1.6; color:#8FA0A0;">
+    <span>© 2026 Ymir · [Company legal name] · Houston, Texas</span>
+    <span>Supported by the NIH (award R35GM150460).</span>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { wide: true };
+  componentDidMount() {
+    this.onResize = () => { const w = window.innerWidth >= 1000; if (w !== this.state.wide) this.setState({ wide: w }); };
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  renderVals() { return { wide: this.state.wide }; }
+}
+</script>
+</body>
+</html>
